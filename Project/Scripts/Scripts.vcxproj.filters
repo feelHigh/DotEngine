@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Default">
+      <UniqueIdentifier>{ea7a2d4d-0bbd-4677-a115-636a4d462814}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script Manager">
+      <UniqueIdentifier>{94340884-43ce-4b36-b48c-4625b3994b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts">
+      <UniqueIdentifier>{8470722a-4ec1-461a-a718-4a962b1d6a71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Editor">
+      <UniqueIdentifier>{d9728da9-17fd-4e88-80af-6ed5f1c2180e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Game">
+      <UniqueIdentifier>{69c63667-ed80-44b7-bf5e-aadfc558eb7d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMoveScript.h">
+      <Filter>Scripts\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorCameraScript.h">
+      <Filter>Scripts\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="MissileScript.h">
+      <Filter>Scripts\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Scripts\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="DScriptMgr.h">
+      <Filter>Script Manager</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Scripts.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMoveScript.cpp">
+      <Filter>Scripts\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorCameraScript.cpp">
+      <Filter>Scripts\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="MissileScript.cpp">
+      <Filter>Scripts\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Scripts\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="DScriptMgr.cpp">
+      <Filter>Script Manager</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

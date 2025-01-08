@@ -1,0 +1,6 @@
+del /q /f ".\External\Include\Engine\*.*"
+xcopy /s /y /exclude:exclude_list.txt ".\Project\DotEngine\*.h" ".\External\Include\Engine\"
+xcopy /s /y /exclude:exclude_list.txt ".\Project\DotEngine\*.inl" ".\External\Include\Engine\"
+xcopy /s /y /exclude:exclude_list.txt ".\Project\DotEngine\*.fx" ".\Content\Shader\"
+xcopy /s /y /exclude:exclude_list.txt ".\Project\DotEngine\*.hlsl" ".\Content\Shader\"
+xcopy /s /y /exclude:exclude_list.txt ".\Project\DotEngine\*.hlsli" ".\Content\Shader\"
