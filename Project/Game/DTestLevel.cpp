@@ -49,7 +49,7 @@ void DTestLevel::CreateTestLevel()
 
 	pLevel->GetLayer(0)->SetName(L"Default");
 	pLevel->GetLayer(1)->SetName(L"Background");
-	pLevel->GetLayer(2)->SetName(L"Tile");
+	pLevel->GetLayer(2)->SetName(L"Foreground");
 	pLevel->GetLayer(3)->SetName(L"Player");
 	pLevel->GetLayer(4)->SetName(L"Monster");
 	pLevel->GetLayer(5)->SetName(L"PlayerProjectile");
@@ -78,11 +78,11 @@ void DTestLevel::CreateTestLevel()
 
 	// 광원 오브젝트 추가
 	pObject = new DGameObject;
-	pObject->SetName(L"PointLight 1");
+	pObject->SetName(L"World Light");
 	pObject->AddComponent(new DTransform);
 	pObject->AddComponent(new DLight2D);
 
-	pObject->Light2D()->SetLightType(LIGHT_TYPE::POINT);
+	pObject->Light2D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
 	pObject->Light2D()->SetLightColor(Vec3(1.f, 1.f, 1.f));
 	pObject->Light2D()->SetRadius(1000.f);
 	pObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
@@ -96,18 +96,35 @@ void DTestLevel::CreateTestLevel()
 	pBG->AddComponent(new DMeshRender);
 
 	pBG->Transform()->SetRelativePos(0.f, 0.f, 500.f);
-	pBG->Transform()->SetRelativeScale(1115.f, 303.f, 1.f);
+	pBG->Transform()->SetRelativeScale(1920.f, 1920.f, 1.f);
 
 	pBG->MeshRender()->SetMesh(DAssetMgr::GetInst()->FindAsset<DMesh>(L"RectMesh"));
 	pBG->MeshRender()->SetMaterial(DAssetMgr::GetInst()->FindAsset<DMaterial>(L"Std2DMtrl"));
 
 	//pBG->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(2.f, 10.f, 4.f, 1.f));
-	pBG->MeshRender()->GetMaterial()->SetTexParam(TEX_0, DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\fire_11.png"));
+	pBG->MeshRender()->GetMaterial()->SetTexParam(TEX_0, DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\Background\\Title1920-Alpha.png"));
 
 	pLevel->AddObject(1, pBG);
 
+	DGameObject* pFG = new DGameObject;
+	pFG->SetName(L"FG");
+	pFG->AddComponent(new DTransform);
+	pFG->AddComponent(new DMeshRender);
+
+	pFG->Transform()->SetRelativePos(0.f, 124.f, 400.f);
+	pFG->Transform()->SetRelativeScale(512.f, 256.f, 1.f);
+
+	pFG->MeshRender()->SetMesh(DAssetMgr::GetInst()->FindAsset<DMesh>(L"RectMesh"));
+	//pFG->MeshRender()->SetMaterial(DAssetMgr::GetInst()->FindAsset<DMaterial>(L"Std2DMtrl"));
+	pFG->MeshRender()->SetMaterial(DAssetMgr::GetInst()->FindAsset<DMaterial>(L"Std2DMtrl2"));
+
+	//pFG->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, Vec4(2.f, 10.f, 4.f, 1.f));
+	pFG->MeshRender()->GetMaterial()->SetTexParam(TEX_0, DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\Background\\logo_white-Alpha.png"));
+
+	pLevel->AddObject(2, pFG);
+
 	// 플레이어 오브젝트
-	DGameObject* pPlayer = new DGameObject;
+	/*DGameObject* pPlayer = new DGameObject;
 	pPlayer->SetName(L"Player");
 	pPlayer->AddComponent(new DTransform);
 	pPlayer->AddComponent(new DMeshRender);
@@ -128,7 +145,7 @@ void DTestLevel::CreateTestLevel()
 	pPlayer->PaperFlipbook()->AddFlipbook(5, pFlipbook);
 	pPlayer->PaperFlipbook()->Play(5, 10, true);
 
-	pLevel->AddObject(3, pPlayer);
+	pLevel->AddObject(3, pPlayer);*/
 
 
 	// Effect Object

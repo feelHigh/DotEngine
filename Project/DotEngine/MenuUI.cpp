@@ -58,6 +58,8 @@ void MenuUI::Update()
 	GameObject();
 
 	Assets();
+
+	Editor();
 }
 
 void MenuUI::File()
@@ -201,8 +203,14 @@ void MenuUI::Assets()
 			pMtrl->Save(Key);
 		}
 
+		ImGui::EndMenu();
+	}
+}
 
-
+void MenuUI::Editor()
+{
+	if (ImGui::BeginMenu("Editor"))
+	{
 		DEditor* pSpriteEditor = DEditorMgr::GetInst()->FindEditor("SpriteEditor");
 		bool IsActive = pSpriteEditor->IsActive();
 

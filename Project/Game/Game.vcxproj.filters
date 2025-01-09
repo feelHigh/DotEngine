@@ -7,6 +7,12 @@
     <Filter Include="GameLevels">
       <UniqueIdentifier>{cb626bd2-f751-4dd9-ba20-f9401eb1fe3b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameLevels\Title">
+      <UniqueIdentifier>{8bdb88c7-e9af-4225-82dc-22f824e58cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameLevels\Test">
+      <UniqueIdentifier>{3ed53835-7aca-415e-8b5a-46928b4bf166}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -25,7 +31,7 @@
       <Filter>Default</Filter>
     </ClInclude>
     <ClInclude Include="DTestLevel.h">
-      <Filter>GameLevels</Filter>
+      <Filter>GameLevels\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -34,7 +40,7 @@
     </ClCompile>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="DTestLevel.cpp">
-      <Filter>GameLevels</Filter>
+      <Filter>GameLevels\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

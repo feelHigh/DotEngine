@@ -23,19 +23,6 @@ void DTexture::Binding(UINT _RegisterNum)
 	CONTEXT->PSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
 }
 
-void DTexture::Binding_CS_SRV(UINT _RegisterNum)
-{
-	m_RecentBindingRegisterNum = _RegisterNum;
-	CONTEXT->CSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
-}
-
-void DTexture::Binding_CS_UAV(UINT _RegisterNum)
-{
-	UINT i = -1;
-	CONTEXT->CSSetUnorderedAccessViews(_RegisterNum, 1, m_UAV.GetAddressOf(), &i);
-	m_RecentBindingRegisterNum = _RegisterNum;
-}
-
 void DTexture::Clear(UINT _RegisterNum)
 {
 	ID3D11ShaderResourceView* pSRV = nullptr;
@@ -46,10 +33,23 @@ void DTexture::Clear(UINT _RegisterNum)
 	CONTEXT->PSSetShaderResources(_RegisterNum, 1, &pSRV);
 }
 
+void DTexture::Binding_CS_SRV(UINT _RegisterNum)
+{
+	m_RecentBindingRegisterNum = _RegisterNum;
+	CONTEXT->CSSetShaderResources(_RegisterNum, 1, m_SRV.GetAddressOf());
+}
+
 void DTexture::Clear_CS_SRV()
 {
 	ID3D11ShaderResourceView* pSRV = nullptr;
 	CONTEXT->CSSetShaderResources(m_RecentBindingRegisterNum, 1, &pSRV);
+}
+
+void DTexture::Binding_CS_UAV(UINT _RegisterNum)
+{
+	UINT i = -1;
+	CONTEXT->CSSetUnorderedAccessViews(_RegisterNum, 1, m_UAV.GetAddressOf(), &i);
+	m_RecentBindingRegisterNum = _RegisterNum;
 }
 
 void DTexture::Clear_CS_UAV()

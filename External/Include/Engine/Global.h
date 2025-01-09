@@ -48,6 +48,10 @@ using std::make_pair;
 #include <filesystem>
 using namespace std::filesystem;
 
+#include <algorithm>
+using std::min;
+using std::max;
+
 // FMOD
 #include <FMOD\fmod.h>
 #include <FMOD\fmod.hpp>

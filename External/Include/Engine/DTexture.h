@@ -28,23 +28,24 @@ public:
     void Binding_CS_UAV(UINT _RegisterNum);
     void Clear_CS_UAV();
 
-
-    virtual int Load(const wstring& _FilePath) override;
-    virtual int Save(const wstring& _FilePath) override;
-
 public:
     ComPtr<ID3D11Texture2D>             GetTex2D() { return m_Tex2D; }
     ComPtr<ID3D11RenderTargetView>      GetRTV() { return m_RTV; }
     ComPtr<ID3D11DepthStencilView>      GetDSV() { return m_DSV; }
     ComPtr<ID3D11ShaderResourceView>    GetSRV() { return m_SRV; }
     ComPtr<ID3D11UnorderedAccessView>   GetUAV() { return m_UAV; }
-    const D3D11_TEXTURE2D_DESC& GetDesc() { return m_Desc; }
+    const D3D11_TEXTURE2D_DESC&         GetDesc() { return m_Desc; }
 
+public:
     tPixel* GetPixels() { return (tPixel*)m_Image.GetPixels(); }
 
 public:
     UINT GetWidth() { return m_Desc.Width; }
     UINT GetHeight() { return m_Desc.Height; }
+
+public:
+    virtual int Load(const wstring& _FilePath) override;
+    virtual int Save(const wstring& _FilePath) override;
 
 private:
     ScratchImage                        m_Image;

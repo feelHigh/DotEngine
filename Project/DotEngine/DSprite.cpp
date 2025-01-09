@@ -16,6 +16,18 @@ DSprite::~DSprite()
 {
 }
 
+void DSprite::Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel)
+{
+	m_Atlas = _Atlas;
+	assert(m_Atlas);
+
+	UINT width = m_Atlas->GetWidth();
+	UINT height = m_Atlas->GetHeight();
+
+	m_LeftTopUV = Vec2(_LeftTopPixel.x / (float)width, _LeftTopPixel.y / (float)height);
+	m_SliceUV = Vec2(_SlicePixel.x / (float)width, _SlicePixel.y / (float)height);
+}
+
 void DSprite::SetLeftTop(Vec2 _LeftTop)
 {
 	Vec2 AtlasResolution = Vec2((float)m_Atlas->GetWidth(), (float)m_Atlas->GetHeight());
@@ -38,18 +50,6 @@ void DSprite::SetOffset(Vec2 _Offset)
 {
 	Vec2 AtlasResolution = Vec2((float)m_Atlas->GetWidth(), (float)m_Atlas->GetHeight());
 	m_OffsetUV = _Offset / AtlasResolution;
-}
-
-void DSprite::Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel)
-{
-	m_Atlas = _Atlas;
-	assert(m_Atlas);
-
-	UINT width = m_Atlas->GetWidth();
-	UINT height = m_Atlas->GetHeight();
-
-	m_LeftTopUV = Vec2(_LeftTopPixel.x / (float)width, _LeftTopPixel.y / (float)height);
-	m_SliceUV = Vec2(_SlicePixel.x / (float)width, _SlicePixel.y / (float)height);
 }
 
 int DSprite::Save(const wstring& _FilePath)

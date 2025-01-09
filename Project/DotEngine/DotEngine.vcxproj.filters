@@ -229,6 +229,21 @@
     <Filter Include="09. Editor\01. Inspector\ComponentUI\09. ScriptUI">
       <UniqueIdentifier>{4b209df7-9234-4955-9682-253065aa9b89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="09. Editor\09. Flipbook Editor">
+      <UniqueIdentifier>{8fcc9664-6f1d-4a16-a9ed-b1b96544820a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Editor\08. Sprite Editor\Sub Windows">
+      <UniqueIdentifier>{e4be728c-d76f-4deb-84d9-4f93de436867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Editor\08. Sprite Editor\Sub Windows\Atlas View">
+      <UniqueIdentifier>{8f629378-7bcd-43a7-8034-68a42fb3e853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Editor\08. Sprite Editor\Sub Windows\Sprite View">
+      <UniqueIdentifier>{dc44d586-b27d-46bf-96e5-93b052ed3f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="09. Editor\08. Sprite Editor\Sub Windows\Sprite Mod">
+      <UniqueIdentifier>{5bb237b9-62a7-4f27-a113-3ada356f2ad5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -510,6 +525,21 @@
     <ClInclude Include="DParticleTickCS.h">
       <Filter>Shader Code\03. Compute</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteEditor.h">
+      <Filter>09. Editor\08. Sprite Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_Sub.h">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_AtlasView.h">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Atlas View</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_SpriteView.h">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite View</Filter>
+    </ClInclude>
+    <ClInclude Include="SE_SpriteMod.h">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite Mod</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -766,6 +796,21 @@
     </ClCompile>
     <ClCompile Include="Func.cpp">
       <Filter>01. Header</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteEditor.cpp">
+      <Filter>09. Editor\08. Sprite Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_Sub.cpp">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_AtlasView.cpp">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Atlas View</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_SpriteView.cpp">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite View</Filter>
+    </ClCompile>
+    <ClCompile Include="SE_SpriteMod.cpp">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite Mod</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

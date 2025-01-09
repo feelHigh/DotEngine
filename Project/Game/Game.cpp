@@ -44,7 +44,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
     // Engine 객체 초기화
     if (FAILED(DEngine::GetInst()->Init(hWnd
-                                        , POINT{ 1600, 900 }
+                                        , POINT{ 1920, 1080 }
                                         , (OBJECT_SAVE)&DLevelSaveLoad::SaveGameObject
                                         , (OBJECT_LOAD)&DLevelSaveLoad::LoadGameObject)))
     {

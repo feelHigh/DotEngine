@@ -161,41 +161,86 @@ void DAssetMgr::CreateEngineTexture()
 
 void DAssetMgr::CreateEngineSprite()
 {
-	//wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
+	//Ptr<DTexture> pAtlasTex = Load<DTexture>(L"Texture\\Player\\Player_Test.png", L"Texture\\Player\\Player_Test.png");
 
 	//Ptr<DSprite> pSprite = nullptr;
 
-	//for (int i = 0; i < 10; ++i)
+	//for (int i = 0; i < nSprite; ++i)
 	//{
-	//	wchar_t Buffer[50] = {};
-	//	swprintf_s(Buffer, 50, L"Link_MoveDown_%d", i);
+	//	wchar_t szKey[50] = {};
+	//	swprintf_s(szKey, 50, L"Player_Idle_Down_%d", i);
 
-	//	pSprite = Load<DSprite>(Buffer, wstring(L"Animation\\") + Buffer + L".sprite");		
+	//	pSprite = new DSprite;
+	//	pSprite->Create(pAtlasTex, Vec2((float)i * 64.f, 0.f), Vec2(64.f, 64.f));
+	//	pSprite->SetBackground(Vec2(64.f, 64.f));
 
-	//	pSprite->SetRelativePath(wstring(L"Animation\\") + Buffer + L".sprite");
-	//	pSprite->Save(strContentPath + L"Animation\\" + Buffer + L".sprite");
+	//	/*if (i == 2)
+	//		pSprite->SetOffset(Vec2(30.f, 0.f));*/
+
+	//	AddAsset(szKey, pSprite);
 	//}
 
-	//Ptr<DFlipbook> pFilpBook = new DFlipbook;
+	//Ptr<DFlipbook> pFlipBook = nullptr;
 
-	//for (int i = 0; i < 10; ++i)
+	//pFlipBook = new DFlipbook;
+
+	//for (int i = 0; i < nSprite; ++i)
 	//{
-	//	wchar_t Buffer[50] = {};
-	//	swprintf_s(Buffer, 50, L"Link_MoveDown_%d", i);
-	//	pFilpBook->AddSprite(FindAsset<DSprite>(Buffer));		
+	//	wchar_t szKey[50] = {};
+	//	swprintf_s(szKey, 50, L"Player_Idle_Down_%d", i);
+	//	pFlipBook->AddSprite(FindAsset<DSprite>(szKey));
 	//}
 
-	//AddAsset(L"Link_MoveDown", pFilpBook);
-	//pFilpBook->Save(strContentPath + L"Animation\\" + L"Link_MoveDown" + L".flip");
+	//AddAsset(L"Player_Idle_Down", pFlipBook);
+	// 여기까는 AddAsset만하고 Save/Load 안됌
+	// 여기부터 사용
 
-	//Ptr<DFlipbook> pFilpBook = new DFlipbook;
-	//Load<DFlipbook>(L"Link_MoveDown", L"Animation\\Link_MoveDown.flip");
+	/*Ptr<DTexture> pAtlasTex = Load<DTexture>(L"Texture\\Monsters\\Release\\Skull.png", L"Texture\\Monsters\\Release\\Skull.png");
+
+	Ptr<DSprite> pSprite = nullptr;
+
+	int nSprite = 4;
+	int nRow = 1;
+	float fPixel = 21.f;
+
+	wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
+
+	for (int i = 0; i < nSprite; ++i)
+	{
+		wchar_t Buffer[50] = {};
+		swprintf_s(Buffer, 50, L"Skull_Neutral_%d", i);
+
+		pSprite = new DSprite;
+		pSprite->Create(pAtlasTex, Vec2((float)i * fPixel, 0.f), Vec2(fPixel, fPixel));
+		pSprite->SetBackground(Vec2(32.f, 32.f));
+
+		pSprite->SetRelativePath(wstring(L"Sprite\\") + Buffer + L".sprite");
+		pSprite->Save(strContentPath + L"Sprite\\" + Buffer + L".sprite");
+
+
+		pSprite = Load<DSprite>(Buffer, wstring(L"Sprite\\") + Buffer + L".sprite");
+	}
+
+	Ptr<DFlipbook> pFilpBook = new DFlipbook;
+
+	for (int i = 0; i < nSprite; ++i)
+	{
+		wchar_t Buffer[50] = {};
+		swprintf_s(Buffer, 50, L"Skull_Neutral_%d", i);
+		pFilpBook->AddSprite(FindAsset<DSprite>(Buffer));
+	}
+
+	AddAsset(L"Skull_Neutral", pFilpBook);
+	pFilpBook->Save(strContentPath + L"Flipbook\\" + L"Skull_Neutral" + L".flip");*/
+
+	// 여기 사용 안함
+	//Load<DFlipbook>(L"Player_Idle_Down", L"Flipbook\\Player_Idle_Down.flip");
 }
 
 void DAssetMgr::CreateEngineGraphicShader()
 {
 	Ptr<DGraphicShader> pShader = nullptr;
-
+	//-----------------------------------------------------------------------------------------------------
 	// Std2DShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\std2d.hlsl", "VS_Std2D");
@@ -210,8 +255,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->AddTexParam(TEX_0, "OutputTexture");
 
 	AddAsset(L"Std2DShader", pShader);
-
-
+	//-----------------------------------------------------------------------------------------------------
 	// Std2DAlphaBlend
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\std2d.hlsl", "VS_Std2D");
@@ -224,7 +268,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_TRANSPARENT);
 
 	AddAsset(L"Std2DAlphaBlendShader", pShader);
-
+	//-----------------------------------------------------------------------------------------------------
 	// EffectShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\std2d.hlsl", "VS_Effect");
@@ -237,8 +281,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_EFFECT);
 
 	AddAsset(L"EffectShader", pShader);
-
-
+	//-----------------------------------------------------------------------------------------------------
 	// DebugShapeShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\Debug.hlsl", "VS_DebugShape");
@@ -253,8 +296,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_DEBUG);
 
 	AddAsset(L"DebugShapeShader", pShader);
-
-
+	//-----------------------------------------------------------------------------------------------------
 	// TileMapShader
 	pShader = new DGraphicShader;
 
@@ -268,8 +310,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
 
 	AddAsset(L"TileMapShader", pShader);
-
-
+	//-----------------------------------------------------------------------------------------------------
 	// ParticleShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\Particle.hlsl", "VS_Particle");
@@ -283,8 +324,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_EFFECT);
 
 	AddAsset(L"ParticleRenderShader", pShader);
-
-
+	//-----------------------------------------------------------------------------------------------------
 	// GrayFilterShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\PostProcess.hlsl", "VS_GrayFilter");
@@ -294,7 +334,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetBSType(BS_TYPE::DEFAULT);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddAsset(L"GrayFilterShader", pShader);
-
+	//-----------------------------------------------------------------------------------------------------
 	// DistortionShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\PostProcess.hlsl", "VS_Distortion");
@@ -304,7 +344,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetBSType(BS_TYPE::DEFAULT);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddAsset(L"DistortionShader", pShader);
-
+	//-----------------------------------------------------------------------------------------------------
 	// BlurShader
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\PostProcess.hlsl", "VS_Blur");
@@ -314,7 +354,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetBSType(BS_TYPE::ALPHABLEND);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddAsset(L"BlurShader", pShader);
-
+	//-----------------------------------------------------------------------------------------------------
 	// EffectMerge
 	pShader = new DGraphicShader;
 	pShader->CreateVertexShader(L"Shader\\PostProcess.hlsl", "VS_EffectMerge");
@@ -324,6 +364,7 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetBSType(BS_TYPE::ALPHABLEND);
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddAsset(L"EffectMergeShader", pShader);
+	//-----------------------------------------------------------------------------------------------------
 }
 
 #include "DParticleTickCS.h"
@@ -340,38 +381,42 @@ void DAssetMgr::CreateEngineComputeShader()
 void DAssetMgr::CreateEngineMaterial()
 {
 	Ptr<DMaterial>	pMtrl = nullptr;
-
+	//-----------------------------------------------------------------------------------------------------
 	// Std2DMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
+	// Std2DMtrl
+	pMtrl = new DMaterial(true);
+	pMtrl->SetShader(FindAsset<DGraphicShader>(L"Std2DShader"));
+	AddAsset(L"Std2DMtrl2", pMtrl);
+	//-----------------------------------------------------------------------------------------------------
 	// Std2DAlphaBlendMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"Std2DAlphaBlendShader"));
 	AddAsset(L"Std2DAlphaBlendMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// EffectMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"EffectShader"));
 	AddAsset(L"EffectMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// DebugShapeMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"DebugShapeShader"));
 	AddAsset(L"DebugShapeMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// TileMapMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"TileMapShader"));
 	AddAsset(L"TileMapMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// ParticleRenderMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"ParticleRenderShader"));
 	AddAsset(L"ParticleRenderMtrl", pMtrl);
-
-
+	//-----------------------------------------------------------------------------------------------------
 	// GrayFilterMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"GrayFilterShader"));
@@ -380,7 +425,7 @@ void DAssetMgr::CreateEngineMaterial()
 	pMtrl->SetTexParam(TEX_2, FindAsset<DTexture>(L"Texture\\Noise\\noise_02.png"));
 	pMtrl->SetTexParam(TEX_3, FindAsset<DTexture>(L"Texture\\Noise\\noise_03.jpg"));
 	AddAsset(L"GrayFilterMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// DistortionMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"DistortionShader"));
@@ -389,14 +434,15 @@ void DAssetMgr::CreateEngineMaterial()
 	pMtrl->SetTexParam(TEX_2, FindAsset<DTexture>(L"Texture\\Noise\\noise_02.png"));
 	pMtrl->SetTexParam(TEX_3, FindAsset<DTexture>(L"Texture\\Noise\\noise_03.jpg"));
 	AddAsset(L"DistortionMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// BlurMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"BlurShader"));
 	AddAsset(L"BlurMtrl", pMtrl);
-
+	//-----------------------------------------------------------------------------------------------------
 	// EffectMergeMtrl
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"EffectMergeShader"));
 	AddAsset(L"EffectMergeMtrl", pMtrl);
+	//-----------------------------------------------------------------------------------------------------
 }
