@@ -22,9 +22,12 @@ void DPathMgr::Init()
 	GetParentPath(szBuffer);
 	GetParentPath(szBuffer);
 
-	// \\Content\\ 를 붙여둔다
+	// Content 경로
 	m_Content = szBuffer;
 	m_Content += L"\\Content\\";
+
+	// Solution 경로
+	m_Solution = szBuffer;
 }
 
 void DPathMgr::render()

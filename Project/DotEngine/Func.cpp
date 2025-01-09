@@ -210,3 +210,16 @@ void LoadWString(wstring& _String, FILE* _File)
 	_String.resize(len);
 	fread((wchar_t*)_String.c_str(), sizeof(wchar_t), len, _File);
 }
+
+string WStringToString(const wstring& _wstring)
+{
+	if (_wstring.empty()) {
+		return string();
+	}
+
+	int size_needed = WideCharToMultiByte(CP_UTF8, 0, _wstring.c_str(), static_cast<int>(_wstring.size()), nullptr, 0, nullptr, nullptr);
+	string str(size_needed, 0);
+	WideCharToMultiByte(CP_UTF8, 0, _wstring.c_str(), static_cast<int>(_wstring.size()), &str[0], size_needed, nullptr, nullptr);
+
+	return str;
+}

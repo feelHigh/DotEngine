@@ -16,6 +16,7 @@ void DrawDebugCircle(Vec3 _Pos, float _Radius, Vec4 _Color, float _Life, bool _D
 void SaveWString(const wstring& _String, FILE* _File);
 void LoadWString(wstring& _String, FILE* _File);
 
+string WStringToString(const wstring& _wstring);
 
 template<typename T, int _Size>
 void Delete_Array(T(&_arr)[_Size])
