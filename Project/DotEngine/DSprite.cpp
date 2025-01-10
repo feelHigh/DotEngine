@@ -16,7 +16,7 @@ DSprite::~DSprite()
 {
 }
 
-void DSprite::Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel)
+void DSprite::Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _Slice)
 {
 	m_Atlas = _Atlas;
 	assert(m_Atlas);
@@ -25,7 +25,7 @@ void DSprite::Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel)
 	UINT height = m_Atlas->GetHeight();
 
 	m_LeftTopUV = Vec2(_LeftTopPixel.x / (float)width, _LeftTopPixel.y / (float)height);
-	m_SliceUV = Vec2(_SlicePixel.x / (float)width, _SlicePixel.y / (float)height);
+	m_SliceUV = Vec2(_Slice.x / (float)width, _Slice.y / (float)height);
 }
 
 void DSprite::SetLeftTop(Vec2 _LeftTop)

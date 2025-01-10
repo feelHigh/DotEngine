@@ -11,7 +11,7 @@ public:
     ~DSprite();
 
 public:
-    void Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _SlicePixel);
+    void Create(Ptr<DTexture> _Atlas, Vec2 _LeftTopPixel, Vec2 _Slice);
 
 public:
     Ptr<DTexture> GetAtlasTexture() { return m_Atlas; }

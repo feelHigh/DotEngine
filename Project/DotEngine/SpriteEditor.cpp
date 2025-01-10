@@ -24,7 +24,12 @@ void SpriteEditor::Init()
 	m_SpriteView = (SE_SpriteView*)DEditorMgr::GetInst()->FindEditor("SE_SpriteView");
 	m_SpriteMod = (SE_SpriteMod*)DEditorMgr::GetInst()->FindEditor("SE_SpriteMod");
 
+	m_AtlasView->m_Owner = this;
+	m_SpriteView->m_Owner = this;
+	m_SpriteMod->m_Owner = this;
+
 	m_AtlasView->SetAtlasTex(DAssetMgr::GetInst()->Load<DTexture>(L"Texture\\Dalia-Idle.png", L"Texture\\Dalia-Idle.png"));
+	//m_SpriteView->SetAtlasTex(DAssetMgr::GetInst()->Load<DTexture>(L"Texture\\DaliaSprite-Test.png", L"Texture\\DaliaSprite-Test.png"));
 }
 
 void SpriteEditor::Update()

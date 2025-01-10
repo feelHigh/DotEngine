@@ -150,13 +150,6 @@ void DAssetMgr::CreateEngineTexture()
 	Ptr<DTexture> pEffectBlurTarget = CreateTexture(L"EffectBlurTargetTex"
 													, (UINT)(Resolution.x), (UINT)(Resolution.y)
 													, DXGI_FORMAT_R32G32B32A32_FLOAT, D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE);
-
-
-
-	// Noise Texture
-	Load<DTexture>(L"Texture\\Noise\\noise_01.png", L"Texture\\Noise\\noise_01.png");
-	Load<DTexture>(L"Texture\\Noise\\noise_02.png", L"Texture\\Noise\\noise_02.png");
-	Load<DTexture>(L"Texture\\Noise\\noise_03.jpg", L"Texture\\Noise\\noise_03.jpg");
 }
 
 void DAssetMgr::CreateEngineSprite()
@@ -180,18 +173,18 @@ void DAssetMgr::CreateEngineSprite()
 	//	AddAsset(szKey, pSprite);
 	//}
 
-	//Ptr<DFlipbook> pFlipBook = nullptr;
+	//Ptr<DFlipbook> pFlipbook = nullptr;
 
-	//pFlipBook = new DFlipbook;
+	//pFlipbook = new DFlipbook;
 
 	//for (int i = 0; i < nSprite; ++i)
 	//{
 	//	wchar_t szKey[50] = {};
 	//	swprintf_s(szKey, 50, L"Player_Idle_Down_%d", i);
-	//	pFlipBook->AddSprite(FindAsset<DSprite>(szKey));
+	//	pFlipbook->AddSprite(FindAsset<DSprite>(szKey));
 	//}
 
-	//AddAsset(L"Player_Idle_Down", pFlipBook);
+	//AddAsset(L"Player_Idle_Down", pFlipbook);
 	// 여기까는 AddAsset만하고 Save/Load 안됌
 	// 여기부터 사용
 
@@ -221,17 +214,17 @@ void DAssetMgr::CreateEngineSprite()
 		pSprite = Load<DSprite>(Buffer, wstring(L"Sprite\\") + Buffer + L".sprite");
 	}
 
-	Ptr<DFlipbook> pFilpBook = new DFlipbook;
+	Ptr<DFlipbook> pFlipBook = new DFlipbook;
 
 	for (int i = 0; i < nSprite; ++i)
 	{
 		wchar_t Buffer[50] = {};
 		swprintf_s(Buffer, 50, L"Skull_Neutral_%d", i);
-		pFilpBook->AddSprite(FindAsset<DSprite>(Buffer));
+		pFlipBook->AddSprite(FindAsset<DSprite>(Buffer));
 	}
 
-	AddAsset(L"Skull_Neutral", pFilpBook);
-	pFilpBook->Save(strContentPath + L"Flipbook\\" + L"Skull_Neutral" + L".flip");*/
+	AddAsset(L"Skull_Neutral", pFlipBook);
+	pFlipBook->Save(strContentPath + L"Flipbook\\" + L"Skull_Neutral" + L".flip");*/
 
 	// 여기 사용 안함
 	//Load<DFlipbook>(L"Player_Idle_Down", L"Flipbook\\Player_Idle_Down.flip");

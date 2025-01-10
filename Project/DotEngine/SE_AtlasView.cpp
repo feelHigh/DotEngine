@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "SE_AtlasView.h"
 
+#include "SE_SpriteView.h"
+
 // New variables for splitting settings
-static int columns = 4;                // Number of columns
-static int rows = 4;                   // Number of rows
-static int sprite_width = 32;          // Sprite width (default)
-static int sprite_height = 32;         // Sprite height (default)
+static int columns = 8;                // Number of columns
+static int rows = 3;                   // Number of rows
+static int sprite_width = 70;          // Sprite width (default)
+static int sprite_height = 58;         // Sprite height (default)
 static ImVec2 selected_sprite(-1, -1); // Selected sprite (row, column)
 
 // Highlight and selection colors
@@ -14,7 +16,8 @@ static ImU32 selection_color = IM_COL32(0, 191, 255, 150);   // Deeper blue
 static ImU32 border_color = IM_COL32(146, 190, 200, 255);          // Black border for highlight
 
 SE_AtlasView::SE_AtlasView()
-	: m_WidthSize(200)
+    : m_AtlasTex(nullptr)
+    , m_WidthSize(200)
 	, m_WheelScale(1.f)
 {
 }
@@ -33,15 +36,9 @@ void SE_AtlasView::Update()
     if (nullptr == m_AtlasTex)
         return;
 
-    //static ImVector<ImVec2> v_MousePoint;
     static ImVec2 v_CanvasScroll(0.f, 0.f);
-    //static bool b_EnableCanvasGrid = true;
     static bool b_EnableContextMenu = true;
 
-    //ImGui::Checkbox("Enable grid", &b_EnableCanvasGrid);
-    //ImGui::Checkbox("Enable context menu", &b_EnableContextMenu);
-    //ImGui::Text("Mouse Left: drag to add lines,\nMouse Right: drag to scroll, click for context menu.");
-    //-----
     // Add ImGui inputs for sprite sheet splitting
     ImGui::Text("Sprite Sheet Splitter");
     ImGui::InputInt("Columns", &columns);
@@ -88,14 +85,16 @@ void SE_AtlasView::Update()
 
     // Zoom control using mouse wheel
     float wheel_delta = io.MouseWheel;
-    if (wheel_delta != 0.0f && is_hovered) {
+    if (wheel_delta != 0.0f && is_hovered)
+    {
         m_WheelScale += wheel_delta * 0.1f;
         m_WheelScale = std::clamp(m_WheelScale, 0.1f, 10.0f); // Clamp scale between 10% and 1000%
     }
 
     // Pan using right mouse button
     const float mouse_threshold_for_pan = b_EnableContextMenu ? -1.0f : 0.0f;
-    if (is_active && ImGui::IsMouseDragging(ImGuiMouseButton_Right, mouse_threshold_for_pan)) {
+    if (is_active && ImGui::IsMouseDragging(ImGuiMouseButton_Right, mouse_threshold_for_pan))
+    {
         v_CanvasScroll.x += io.MouseDelta.x;
         v_CanvasScroll.y += io.MouseDelta.y;
     }
@@ -129,12 +128,14 @@ void SE_AtlasView::Update()
             draw_list->AddRect(sprite_p0, sprite_p1, border_color);
             
             // Check for mouse click to select the sprite
-            if (is_hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            if (is_hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left)) 
             {
                 if (io.MousePos.x >= sprite_p0.x && io.MousePos.x <= sprite_p1.x &&
-                    io.MousePos.y >= sprite_p0.y && io.MousePos.y <= sprite_p1.y)
+                    io.MousePos.y >= sprite_p0.y && io.MousePos.y <= sprite_p1.y) 
                 {
                     selected_sprite = ImVec2(row, col);
+                    GetSpriteView()->SetTargetSprite(m_AtlasTex, Vec2(col * sprite_width, row * sprite_height), Vec2(sprite_width, sprite_height));
+                    GetSpriteView()->SetSpriteSize(sprite_width, sprite_height); // Pass sprite size
                 }
             }
         }
