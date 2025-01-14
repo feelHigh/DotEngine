@@ -265,7 +265,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="resource.h" />
     <ClInclude Include="ScriptUI.h" />
     <ClInclude Include="SE_AtlasView.h" />
-    <ClInclude Include="SE_SpriteMod.h" />
+    <ClInclude Include="SE_SpriteDisplay.h" />
     <ClInclude Include="SE_SpriteView.h" />
     <ClInclude Include="SE_Sub.h" />
     <ClInclude Include="SimpleMath.h" />
@@ -365,7 +365,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="PrefabUI.cpp" />
     <ClCompile Include="ScriptUI.cpp" />
     <ClCompile Include="SE_AtlasView.cpp" />
-    <ClCompile Include="SE_SpriteMod.cpp" />
+    <ClCompile Include="SE_SpriteDisplay.cpp" />
     <ClCompile Include="SE_SpriteView.cpp" />
     <ClCompile Include="SE_Sub.cpp" />
     <ClCompile Include="SoundUI.cpp" />

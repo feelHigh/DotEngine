@@ -241,7 +241,7 @@
     <Filter Include="09. Editor\08. Sprite Editor\Sub Windows\Sprite View">
       <UniqueIdentifier>{dc44d586-b27d-46bf-96e5-93b052ed3f5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="09. Editor\08. Sprite Editor\Sub Windows\Sprite Mod">
+    <Filter Include="09. Editor\08. Sprite Editor\Sub Windows\Sprite Display">
       <UniqueIdentifier>{5bb237b9-62a7-4f27-a113-3ada356f2ad5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -537,8 +537,8 @@
     <ClInclude Include="SE_SpriteView.h">
       <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite View</Filter>
     </ClInclude>
-    <ClInclude Include="SE_SpriteMod.h">
-      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite Mod</Filter>
+    <ClInclude Include="SE_SpriteDisplay.h">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite Display</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -809,8 +809,8 @@
     <ClCompile Include="SE_SpriteView.cpp">
       <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite View</Filter>
     </ClCompile>
-    <ClCompile Include="SE_SpriteMod.cpp">
-      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite Mod</Filter>
+    <ClCompile Include="SE_SpriteDisplay.cpp">
+      <Filter>09. Editor\08. Sprite Editor\Sub Windows\Sprite Display</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,11 +3,13 @@
 
 SE_SpriteView::SE_SpriteView()
     : m_AtlasTex(nullptr)
+    , m_SpriteLeftTop(0)
     , m_SpriteWidth(0)
     , m_SpriteHeight(0)
     , m_OffsetX(0)
     , m_OffsetY(0)
     , m_ZoomScale(5.67f)
+    , m_Slice(0, 0)
     , m_CanvasScroll(ImVec2(0.f, 0.f))
 {
 }
@@ -55,7 +57,7 @@ void SE_SpriteView::Update()
     }
 
     // Handle panning (right mouse drag)
-    if (ImGui::IsMouseDragging(ImGuiMouseButton_Right)) 
+    if (ImGui::IsMouseDragging(ImGuiMouseButton_Right))
     {
         m_CanvasScroll.x += io.MouseDelta.x;
         m_CanvasScroll.y += io.MouseDelta.y;
@@ -81,17 +83,9 @@ void SE_SpriteView::Update()
     ImVec2 uv1 = ImVec2((m_LeftTopPixel.x + m_Slice.x) / m_AtlasTex->GetWidth()
                        ,(m_LeftTopPixel.y + m_Slice.y) / m_AtlasTex->GetHeight());
 
-    draw_list->AddImage(m_AtlasTex->GetSRV().Get()
-                        , sprite_pos
+    draw_list->AddImage(m_AtlasTex->GetSRV().Get(), sprite_pos
                         , ImVec2(sprite_pos.x + sprite_size.x, sprite_pos.y + sprite_size.y)
                         , uv0, uv1);
-
-    // Draw highlight square (independent of offset)
-    /*ImVec2 highlight_pos = ImVec2(canvas_p0.x + m_CanvasScroll.x, canvas_p0.y + m_CanvasScroll.y);
-    ImVec2 highlight_size = ImVec2(m_SpriteWidth * m_ZoomScale, m_SpriteHeight * m_ZoomScale);
-    draw_list->AddRect(highlight_pos
-                    , ImVec2(highlight_pos.x + highlight_size.x, highlight_pos.y + highlight_size.y)
-                    , IM_COL32(255, 0, 0, 255), 0.0f, 0, 2.0f);*/
 
     // Calculate highlight square (independent of offset)
     ImVec2 highlight_pos = ImVec2(canvas_p0.x + m_CanvasScroll.x, canvas_p0.y + m_CanvasScroll.y);
@@ -126,8 +120,42 @@ void SE_SpriteView::Update()
 
     // Input fields for offset
     ImGui::Text("Offset");
-    ImGui::InputInt("Offset X", &m_OffsetX);
-    ImGui::InputInt("Offset Y", &m_OffsetY);
+    ImGui::SliderInt("Offset X", &m_OffsetX, -32, 32);
+    ImGui::SliderInt("Offset Y", &m_OffsetY, -32, 32);
+
+    // Sprite Save
+    wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
+
+    // Static variable to hold the file name
+    static char fileName[256] = "default_name";
+
+    // Input text for the file name
+    ImGui::Text("File Name");
+    ImGui::InputText("##FileNameInput", fileName, IM_ARRAYSIZE(fileName));
+
+    // Add the Save button
+    ImGui::Text("Save Sprite");
+    if (ImGui::Button("Save"))
+    {
+        Ptr<DSprite> pTargetSave = new DSprite;
+        pTargetSave->Create(m_AtlasTex, m_LeftTopPixel, m_Slice);
+
+        // Set the offset values
+        pTargetSave->SetOffset(Vec2((float)m_OffsetX, (float)m_OffsetY));
+
+        // Convert char to wstring for save
+        wstring filePath = wstring(fileName, fileName + strlen(fileName));
+
+        // Save the sprite
+        if (pTargetSave->Save(strContentPath + L"Sprite\\" + filePath + L".sprite") == S_OK)
+        {
+            ImGui::Text("Sprite saved successfully!");
+        }
+        else
+        {
+            ImGui::Text("Failed to save sprite.");
+        }
+    }
 }
 
 void SE_SpriteView::SetTargetSprite(Ptr<DTexture> _Tex, Vec2 _LeftTopPixel, Vec2 _Slice)

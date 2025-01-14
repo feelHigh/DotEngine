@@ -4,12 +4,12 @@
 #include "DEditorMgr.h"
 #include "SE_AtlasView.h"
 #include "SE_SpriteView.h"
-#include "SE_SpriteMod.h"
+#include "SE_SpriteDisplay.h"
 
 SpriteEditor::SpriteEditor()
 	: m_AtlasView(nullptr)
 	, m_SpriteView(nullptr)
-	, m_SpriteMod(nullptr)
+	, m_SpriteDisplay(nullptr)
 {
 	UseMenuBar(true);
 }
@@ -22,11 +22,11 @@ void SpriteEditor::Init()
 {
 	m_AtlasView = (SE_AtlasView*)DEditorMgr::GetInst()->FindEditor("SE_AtlasView");
 	m_SpriteView = (SE_SpriteView*)DEditorMgr::GetInst()->FindEditor("SE_SpriteView");
-	m_SpriteMod = (SE_SpriteMod*)DEditorMgr::GetInst()->FindEditor("SE_SpriteMod");
+	m_SpriteDisplay = (SE_SpriteDisplay*)DEditorMgr::GetInst()->FindEditor("SE_SpriteDisplay");
 
 	m_AtlasView->m_Owner = this;
 	m_SpriteView->m_Owner = this;
-	m_SpriteMod->m_Owner = this;
+	m_SpriteDisplay->m_Owner = this;
 
 	m_AtlasView->SetAtlasTex(DAssetMgr::GetInst()->Load<DTexture>(L"Texture\\Dalia-Idle.png", L"Texture\\Dalia-Idle.png"));
 	//m_SpriteView->SetAtlasTex(DAssetMgr::GetInst()->Load<DTexture>(L"Texture\\DaliaSprite-Test.png", L"Texture\\DaliaSprite-Test.png"));
@@ -50,7 +50,7 @@ void SpriteEditor::Update()
 		{
 			bool b_AtlasView = m_AtlasView->IsActive();
 			bool b_SpriteView = m_SpriteView->IsActive();
-			bool b_SpriteMod = m_SpriteMod->IsActive();
+			bool b_SpriteDisplay = m_SpriteDisplay->IsActive();
 
 			if (ImGui::MenuItem("Atlas View", nullptr, &b_AtlasView))
 			{
@@ -62,9 +62,9 @@ void SpriteEditor::Update()
 				m_SpriteView->SetActive(b_SpriteView);
 			}
 			
-			if (ImGui::MenuItem("Sprite Mod", nullptr, &b_SpriteMod))
+			if (ImGui::MenuItem("Sprite Display", nullptr, &b_SpriteDisplay))
 			{
-				m_SpriteMod->SetActive(b_SpriteMod);
+				m_SpriteDisplay->SetActive(b_SpriteDisplay);
 			}
 
 			ImGui::EndMenu();
@@ -78,12 +78,12 @@ void SpriteEditor::Activate()
 {
 	m_AtlasView->SetActive(true);
 	m_SpriteView->SetActive(true);
-	m_SpriteMod->SetActive(true);
+	m_SpriteDisplay->SetActive(true);
 }
 
 void SpriteEditor::Deactivate()
 {
 	m_AtlasView->SetActive(false);
 	m_SpriteView->SetActive(false);
-	m_SpriteMod->SetActive(false);
+	m_SpriteDisplay->SetActive(false);
 }

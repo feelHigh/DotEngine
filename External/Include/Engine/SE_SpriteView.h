@@ -19,16 +19,17 @@ public:
 private:
 	Ptr<DTexture>   m_AtlasTex;
 
-	int				m_SpriteWidth;	// Sprite width (from AtlasView)
-	int				m_SpriteHeight;	// Sprite height (from AtlasView)
-	int				m_OffsetX;		// X offset
-	int				m_OffsetY;		// Y offset
+	int				m_SpriteLeftTop;	// Sprite width (from AtlasView)
+	int				m_SpriteWidth;		// Sprite width (from AtlasView)
+	int				m_SpriteHeight;		// Sprite height (from AtlasView)
+	int				m_OffsetX;			// X offset
+	int				m_OffsetY;			// Y offset
 
-	float			m_ZoomScale;	// Initialize zoom level
+	float			m_ZoomScale;		// Initialize zoom level
 
-	Vec2			m_LeftTopPixel;
-	Vec2			m_Slice;
+	Vec2			m_LeftTopPixel;		// Image pixel Starting point
+	Vec2			m_Slice;			// Slice area
 
-	ImVec2			m_CanvasScroll;	// For panning
+	ImVec2			m_CanvasScroll;		// For panning
 
 };

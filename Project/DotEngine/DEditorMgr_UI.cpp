@@ -15,7 +15,7 @@
 #include "SpriteEditor.h"
 #include "SE_AtlasView.h"
 #include "SE_SpriteView.h"
-#include "SE_SpriteMod.h"
+#include "SE_SpriteDisplay.h"
 
 // Module Headers
 #include "ImGui\imgui.h"
@@ -214,10 +214,10 @@ void DEditorMgr::CreateEditor()
     pUI->SetName("SE_SpriteView");
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
-    // SE_SpriteMod
-    pUI = new SE_SpriteMod;
+    // SE_SpriteDisplay
+    pUI = new SE_SpriteDisplay;
     pUI->Init();
-    pUI->SetName("SE_SpriteMod");
+    pUI->SetName("SE_SpriteDisplay");
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
     // SpriteEditor

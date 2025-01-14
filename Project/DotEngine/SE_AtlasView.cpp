@@ -11,9 +11,9 @@ static int sprite_height = 58;         // Sprite height (default)
 static ImVec2 selected_sprite(-1, -1); // Selected sprite (row, column)
 
 // Highlight and selection colors
-static ImU32 highlight_color = IM_COL32(173, 216, 230, 100); // Light blue
-static ImU32 selection_color = IM_COL32(0, 191, 255, 150);   // Deeper blue
-static ImU32 border_color = IM_COL32(146, 190, 200, 255);          // Black border for highlight
+static ImU32 highlight_color = IM_COL32(173, 216, 230, 100);    // Light blue
+static ImU32 selection_color = IM_COL32(0, 191, 255, 150);      // Deeper blue
+static ImU32 border_color = IM_COL32(146, 190, 200, 255);       // Black border for highlight
 
 SE_AtlasView::SE_AtlasView()
     : m_AtlasTex(nullptr)

@@ -3,7 +3,7 @@
 
 class SE_AtlasView;
 class SE_SpriteView;
-class SE_SpriteMod;
+class SE_SpriteDisplay;
 
 class SpriteEditor
 	: public DEditor
@@ -23,11 +23,11 @@ public:
 public:
 	SE_AtlasView* GetAtlasView() { return m_AtlasView; }
 	SE_SpriteView* GetSpriteView() { return m_SpriteView; }
-	SE_SpriteMod* GetSpriteMod() { return m_SpriteMod; }
+	SE_SpriteDisplay* GetSpriteDisplay() { return m_SpriteDisplay; }
 
 private:
-	SE_AtlasView*	m_AtlasView;
-	SE_SpriteView*	m_SpriteView;
-	SE_SpriteMod*	m_SpriteMod;
+	SE_AtlasView*		m_AtlasView;
+	SE_SpriteView*		m_SpriteView;
+	SE_SpriteDisplay*	m_SpriteDisplay;
 
 };
