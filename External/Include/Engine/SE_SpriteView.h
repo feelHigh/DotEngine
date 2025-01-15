@@ -16,6 +16,8 @@ public:
 	void SetTargetSprite(Ptr<DTexture> _Tex, Vec2 _LeftTopPixel, Vec2 _Slice);
 	void SetSpriteSize(int width, int height);
 
+	void SaveSprite();
+
 private:
 	Ptr<DTexture>   m_AtlasTex;
 

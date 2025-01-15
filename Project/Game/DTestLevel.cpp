@@ -124,7 +124,7 @@ void DTestLevel::CreateTestLevel()
 	pLevel->AddObject(2, pFG);
 
 	// 플레이어 오브젝트
-	/*DGameObject* pPlayer = new DGameObject;
+	DGameObject* pPlayer = new DGameObject;
 	pPlayer->SetName(L"Player");
 	pPlayer->AddComponent(new DTransform);
 	pPlayer->AddComponent(new DMeshRender);
@@ -139,13 +139,13 @@ void DTestLevel::CreateTestLevel()
 	pPlayer->Collider2D()->SetScale(Vec3(1.f, 1.f, 1.f));
 
 	pPlayer->MeshRender()->SetMesh(DAssetMgr::GetInst()->FindAsset<DMesh>(L"RectMesh"));
-	pPlayer->MeshRender()->SetMaterial(pMtrl);
+	pPlayer->MeshRender()->SetMaterial(DAssetMgr::GetInst()->FindAsset<DMaterial>(L"Std2DMtrl3"));
 
-	Ptr<DFlipbook> pFlipbook = DAssetMgr::GetInst()->FindAsset<DFlipbook>(L"Flipbook\\Link_MoveDown.flip");
-	pPlayer->PaperFlipbook()->AddFlipbook(5, pFlipbook);
-	pPlayer->PaperFlipbook()->Play(5, 10, true);
+	Ptr<DFlipbook> pFlipbook = DAssetMgr::GetInst()->FindAsset<DFlipbook>(L"Flipbook\\Idle_Left.flip");
+	pPlayer->PaperFlipbook()->AddFlipbook(1, pFlipbook);
+	pPlayer->PaperFlipbook()->Play(1, 6, true);
 
-	pLevel->AddObject(3, pPlayer);*/
+	pLevel->AddObject(3, pPlayer);
 
 
 	// Effect Object

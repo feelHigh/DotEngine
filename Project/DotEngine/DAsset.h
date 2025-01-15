@@ -11,6 +11,7 @@ public:
     friend class Ptr;
 
     friend class DAssetMgr;
+    friend class SE_SpriteView;
 
 public:
     CLONE_DISABLE(DAsset);

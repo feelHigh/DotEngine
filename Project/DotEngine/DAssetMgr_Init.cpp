@@ -188,46 +188,61 @@ void DAssetMgr::CreateEngineSprite()
 	// 여기까는 AddAsset만하고 Save/Load 안됌
 	// 여기부터 사용
 
-	/*Ptr<DTexture> pAtlasTex = Load<DTexture>(L"Texture\\Monsters\\Release\\Skull.png", L"Texture\\Monsters\\Release\\Skull.png");
+	/*Ptr<DTexture> pAtlasTex = Load<DTexture>(L"Texture\\Dalia-Idle.png", L"Texture\\Dalia-Idle.png");
 
 	Ptr<DSprite> pSprite = nullptr;
 
-	int nSprite = 4;
+	int nSprite = 8;
 	int nRow = 1;
-	float fPixel = 21.f;
+	float fPixelX = 70.f;
+	float fPixelY = 58.f;
 
 	wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
 
 	for (int i = 0; i < nSprite; ++i)
 	{
 		wchar_t Buffer[50] = {};
-		swprintf_s(Buffer, 50, L"Skull_Neutral_%d", i);
+		swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
 
 		pSprite = new DSprite;
-		pSprite->Create(pAtlasTex, Vec2((float)i * fPixel, 0.f), Vec2(fPixel, fPixel));
-		pSprite->SetBackground(Vec2(32.f, 32.f));
+		pSprite->Create(pAtlasTex, Vec2((float)i * fPixelX, 0.f), Vec2(fPixelX, fPixelY));
+		pSprite->SetBackground(Vec2(96.f, 96.f));
 
 		pSprite->SetRelativePath(wstring(L"Sprite\\") + Buffer + L".sprite");
 		pSprite->Save(strContentPath + L"Sprite\\" + Buffer + L".sprite");
 
-
 		pSprite = Load<DSprite>(Buffer, wstring(L"Sprite\\") + Buffer + L".sprite");
 	}
 
-	Ptr<DFlipbook> pFlipBook = new DFlipbook;
+	Ptr<DFlipbook> pFlipbook = new DFlipbook;
 
 	for (int i = 0; i < nSprite; ++i)
 	{
 		wchar_t Buffer[50] = {};
-		swprintf_s(Buffer, 50, L"Skull_Neutral_%d", i);
-		pFlipBook->AddSprite(FindAsset<DSprite>(Buffer));
+		swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
+		pFlipbook->AddSprite(FindAsset<DSprite>(Buffer));
 	}
 
-	AddAsset(L"Skull_Neutral", pFlipBook);
-	pFlipBook->Save(strContentPath + L"Flipbook\\" + L"Skull_Neutral" + L".flip");*/
+	AddAsset(L"Idle_Left", pFlipbook);
+	pFlipbook->Save(strContentPath + L"Flipbook\\" + L"Idle_Left" + L".flip");*/
 
 	// 여기 사용 안함
 	//Load<DFlipbook>(L"Player_Idle_Down", L"Flipbook\\Player_Idle_Down.flip");
+
+	// Test
+	/*Ptr<DFlipbook> pFlipbook = new DFlipbook;
+
+	for (int i = 1; i < 9; ++i)
+	{
+		wchar_t Buffer[50] = {};
+		swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
+		pFlipbook->AddSprite(FindAsset<DSprite>(Buffer));
+	}
+
+	wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
+
+	AddAsset(L"Idle_Left", pFlipbook);
+	pFlipbook->Save(strContentPath + L"Flipbook\\" + L"Idle_Left" + L".flip");*/
 }
 
 void DAssetMgr::CreateEngineGraphicShader()
@@ -380,10 +395,15 @@ void DAssetMgr::CreateEngineMaterial()
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl", pMtrl);
 	//-----------------------------------------------------------------------------------------------------
-	// Std2DMtrl
+	// Std2DMtrl-2
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"Std2DShader"));
 	AddAsset(L"Std2DMtrl2", pMtrl);
+	//-----------------------------------------------------------------------------------------------------
+	// Std2DMtrl-3
+	pMtrl = new DMaterial(true);
+	pMtrl->SetShader(FindAsset<DGraphicShader>(L"Std2DShader"));
+	AddAsset(L"Std2DMtrl3", pMtrl);
 	//-----------------------------------------------------------------------------------------------------
 	// Std2DAlphaBlendMtrl
 	pMtrl = new DMaterial(true);

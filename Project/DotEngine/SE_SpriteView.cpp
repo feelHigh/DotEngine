@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SE_SpriteView.h"
+#include "DAssetMgr.h"
 
 SE_SpriteView::SE_SpriteView()
     : m_AtlasTex(nullptr)
@@ -123,39 +124,7 @@ void SE_SpriteView::Update()
     ImGui::SliderInt("Offset X", &m_OffsetX, -32, 32);
     ImGui::SliderInt("Offset Y", &m_OffsetY, -32, 32);
 
-    // Sprite Save
-    wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
-
-    // Static variable to hold the file name
-    static char fileName[256] = "default_name";
-
-    // Input text for the file name
-    ImGui::Text("File Name");
-    ImGui::InputText("##FileNameInput", fileName, IM_ARRAYSIZE(fileName));
-
-    // Add the Save button
-    ImGui::Text("Save Sprite");
-    if (ImGui::Button("Save"))
-    {
-        Ptr<DSprite> pTargetSave = new DSprite;
-        pTargetSave->Create(m_AtlasTex, m_LeftTopPixel, m_Slice);
-
-        // Set the offset values
-        pTargetSave->SetOffset(Vec2((float)m_OffsetX, (float)m_OffsetY));
-
-        // Convert char to wstring for save
-        wstring filePath = wstring(fileName, fileName + strlen(fileName));
-
-        // Save the sprite
-        if (pTargetSave->Save(strContentPath + L"Sprite\\" + filePath + L".sprite") == S_OK)
-        {
-            ImGui::Text("Sprite saved successfully!");
-        }
-        else
-        {
-            ImGui::Text("Failed to save sprite.");
-        }
-    }
+    SaveSprite();
 }
 
 void SE_SpriteView::SetTargetSprite(Ptr<DTexture> _Tex, Vec2 _LeftTopPixel, Vec2 _Slice)
@@ -169,4 +138,59 @@ void SE_SpriteView::SetSpriteSize(int width, int height)
 {
     m_SpriteWidth = width;
     m_SpriteHeight = height;
+}
+
+void SE_SpriteView::SaveSprite()
+{
+    wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
+
+    // Static variable to hold the file name
+    static char fileName[256] = "default_name";
+
+    // Input text for the file name
+    ImGui::Text("File Name");
+    ImGui::InputText("##FileNameInput", fileName, IM_ARRAYSIZE(fileName));
+
+    // Convert char to wstring for save
+    wstring filePath = wstring(fileName, fileName + strlen(fileName));
+
+    // Add the Save button
+    ImGui::Text("Save Sprite");
+    if (ImGui::Button("Save"))
+    {
+        Ptr<DSprite> pTargetSave = new DSprite;
+        pTargetSave->Create(m_AtlasTex, m_LeftTopPixel, m_Slice);
+        pTargetSave->SetBackground(Vec2(m_SpriteWidth, m_SpriteHeight));
+
+        // Set the offset values
+        pTargetSave->SetOffset(Vec2((float)m_OffsetX, (float)m_OffsetY));
+        pTargetSave->SetRelativePath(wstring(L"Sprite\\") + filePath + L".sprite");
+
+        // Save the sprite
+        if (pTargetSave->Save(strContentPath + L"Sprite\\" + filePath + L".sprite") == S_OK)
+        {
+            pTargetSave = DAssetMgr::GetInst()->Load<DSprite>(filePath, wstring(L"Sprite\\") + filePath + L".sprite");
+            ImGui::Text("Sprite saved successfully!");
+        }
+        else
+        {
+            ImGui::Text("Failed to save sprite.");
+        }
+    }
+
+    ImGui::Text("Create Flipbook");
+    if (ImGui::Button("Create"))
+    {
+        Ptr<DFlipbook> pFlipbook = new DFlipbook;
+
+        for (int i = 0; i < 8; ++i)
+        {
+            wchar_t Buffer[50] = {};
+            swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
+            pFlipbook->AddSprite(DAssetMgr::GetInst()->FindAsset<DSprite>(Buffer));
+        }
+
+        DAssetMgr::GetInst()->AddAsset(L"Idle_Left", pFlipbook);
+        pFlipbook->Save(strContentPath + L"Flipbook\\" + L"Idle_Left" + L".flip");
+    }
 }

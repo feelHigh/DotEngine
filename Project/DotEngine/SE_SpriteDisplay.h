@@ -8,10 +8,10 @@ public:
     SE_SpriteDisplay();
     ~SE_SpriteDisplay();
 
-public:
     virtual void Init() override;
     virtual void Update() override;
 
 private:
+    void DisplaySprites(); // Helper function to render sprites
 
 };
