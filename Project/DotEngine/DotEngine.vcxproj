@@ -235,6 +235,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="DTimeMgr.h" />
     <ClInclude Include="DTransform.h" />
     <ClInclude Include="Enum.h" />
+    <ClInclude Include="FlipbookEditor.h" />
     <ClInclude Include="FlipbookUI.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Func.h" />
@@ -275,7 +276,12 @@ call EngineCopy.bat</Command>
     <ClInclude Include="SpriteUI.h" />
     <ClInclude Include="Struct.h" />
     <ClInclude Include="TextureUI.h" />
+    <ClInclude Include="TileMapEditor.h" />
     <ClInclude Include="TileMapUI.h" />
+    <ClInclude Include="TE_Sub.h" />
+    <ClInclude Include="TE_TileMapMod.h" />
+    <ClInclude Include="TE_TileMapView.h" />
+    <ClInclude Include="TE_TileSetView.h" />
     <ClInclude Include="TransformUI.h" />
     <ClInclude Include="TreeUI.h" />
   </ItemGroup>
@@ -335,6 +341,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="DTimeMgr.cpp" />
     <ClCompile Include="DTransform.cpp" />
     <ClCompile Include="Extern.cpp" />
+    <ClCompile Include="FlipbookEditor.cpp" />
     <ClCompile Include="FlipbookUI.cpp" />
     <ClCompile Include="Func.cpp" />
     <ClCompile Include="GraphicShaderUI.cpp" />
@@ -372,7 +379,12 @@ call EngineCopy.bat</Command>
     <ClCompile Include="SpriteEditor.cpp" />
     <ClCompile Include="SpriteUI.cpp" />
     <ClCompile Include="TextureUI.cpp" />
+    <ClCompile Include="TileMapEditor.cpp" />
     <ClCompile Include="TileMapUI.cpp" />
+    <ClCompile Include="TE_Sub.cpp" />
+    <ClCompile Include="TE_TileMapMod.cpp" />
+    <ClCompile Include="TE_TileMapView.cpp" />
+    <ClCompile Include="TE_TileSetView.cpp" />
     <ClCompile Include="TransformUI.cpp" />
     <ClCompile Include="TreeUI.cpp" />
   </ItemGroup>

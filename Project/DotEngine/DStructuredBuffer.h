@@ -26,7 +26,7 @@ public:
     void SetData(void* _pData, UINT _DataSize = 0);
     void GetData(void* _pData, UINT _DataSize = 0);
 
-    // GracphiShader - t register
+    // GracphicShader - t register
     void Binding(UINT _RegisterNum);
     void Clear(UINT _RegisterNum);
 

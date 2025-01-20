@@ -40,6 +40,7 @@ int DStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount,
 		m_Desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 
 	m_Desc.ByteWidth = m_ElementSize * m_ElementCount;
+
 	m_Desc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
 	m_Desc.StructureByteStride = m_ElementSize;
 
@@ -142,6 +143,7 @@ void DStructuredBuffer::SetData(void* _pData, UINT _DataSize)
 	memcpy(tMapSub.pData, _pData, _DataSize);
 	CONTEXT->Unmap(m_SB_Write.Get(), 0);
 
+	// Write Buffer -> Main Buffer
 	CONTEXT->CopyResource(m_SB.Get(), m_SB_Write.Get());
 }
 

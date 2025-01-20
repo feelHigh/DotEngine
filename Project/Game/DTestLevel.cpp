@@ -167,22 +167,22 @@ void DTestLevel::CreateTestLevel()
 	pLevel->AddObject(4, pMonster);*/
 
 	// TileMap Object
-	//DGameObject* pTileMapObj = new DGameObject;
-	//pTileMapObj->SetName(L"TileMap");
+	DGameObject* pTileMapObj = new DGameObject;
+	pTileMapObj->SetName(L"TileMap");
 
-	//pTileMapObj->AddComponent(new DTransform);
-	//pTileMapObj->AddComponent(new DTileMap);
+	pTileMapObj->AddComponent(new DTransform);
+	pTileMapObj->AddComponent(new DTileMap);
 
-	//pTileMapObj->Transform()->SetRelativePos(Vec3(-500.f, 250.f, 500.f));
+	pTileMapObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 200.f));
 
-	//pTileMapObj->TileMap()->SetRowCol(20, 20);
-	//pTileMapObj->TileMap()->SetTileSize(Vec2(64.f, 64.f));
+	pTileMapObj->TileMap()->SetRowCol(2, 2);
+	pTileMapObj->TileMap()->SetTileSize(Vec2(512.f, 384.f));
 
-	//Ptr<DTexture> pTileAtlas = DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\TILE.bmp");
-	//pTileMapObj->TileMap()->SetAtlasTexture(pTileAtlas);
-	//pTileMapObj->TileMap()->SetAtlasTileSize(Vec2(64.f, 64.f));
+	Ptr<DTexture> pTileAtlas = DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\TILE.bmp");
+	pTileMapObj->TileMap()->SetAtlasTexture(pTileAtlas);
+	pTileMapObj->TileMap()->SetAtlasTileSize(Vec2(512.f, 384.f));
 
-	//pLevel->AddObject(2, pTileMapObj);
+	pLevel->AddObject(4, pTileMapObj);
 
 
 	// Particle Object

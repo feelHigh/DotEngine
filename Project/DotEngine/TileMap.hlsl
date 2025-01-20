@@ -96,7 +96,4 @@ float4 PS_TileMap(VS_OUT _in) : SV_Target
     return vOutColor;
 }
 
-
-
-
 #endif
