@@ -212,11 +212,19 @@ void MenuUI::Editor()
 	if (ImGui::BeginMenu("Editor"))
 	{
 		DEditor* pSpriteEditor = DEditorMgr::GetInst()->FindEditor("SpriteEditor");
-		bool IsActive = pSpriteEditor->IsActive();
+		DEditor* pTileMapEditor = DEditorMgr::GetInst()->FindEditor("TileMapEditor");
 
-		if (ImGui::MenuItem("Sprite Editor", nullptr, &IsActive))
+		static bool b_SE_Active = pSpriteEditor->IsActive();
+		static bool b_TE_Active = pSpriteEditor->IsActive();
+
+		if (ImGui::MenuItem("Sprite Editor", nullptr, &b_SE_Active))
 		{
-			DEditorMgr::GetInst()->FindEditor("SpriteEditor")->SetActive(IsActive);
+			DEditorMgr::GetInst()->FindEditor("SpriteEditor")->SetActive(b_SE_Active);
+		}
+
+		if (ImGui::MenuItem("TileMap Editor", nullptr, &b_TE_Active))
+		{
+			DEditorMgr::GetInst()->FindEditor("TileMapEditor")->SetActive(b_TE_Active);
 		}
 
 		ImGui::EndMenu();

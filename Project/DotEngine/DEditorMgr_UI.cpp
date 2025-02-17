@@ -17,6 +17,11 @@
 #include "SE_SpriteView.h"
 #include "SE_SpriteDisplay.h"
 
+#include "TileMapEditor.h"
+#include "TE_TileMapMod.h"
+#include "TE_TileMapView.h"
+#include "TE_TileSetView.h"
+
 // Module Headers
 #include "ImGui\imgui.h"
 #include "ImGui\imgui_impl_dx11.h"
@@ -227,6 +232,30 @@ void DEditorMgr::CreateEditor()
     pUI->SetActive(false);
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
+    // TE_TileMapMod
+    pUI = new TE_TileMapMod;
+    pUI->Init();
+    pUI->SetName("TE_TileMapMod");
+    m_mapUI.insert(make_pair(pUI->GetName(), pUI));
+
+    // TE_TileMapView
+    pUI = new TE_TileMapView;
+    pUI->Init();
+    pUI->SetName("TE_TileMapView");
+    m_mapUI.insert(make_pair(pUI->GetName(), pUI));
+
+    // TE_TileSetView
+    pUI = new TE_TileSetView;
+    pUI->Init();
+    pUI->SetName("TE_TileSetView");
+    m_mapUI.insert(make_pair(pUI->GetName(), pUI));
+
+    // TileMapEditor
+    pUI = new TileMapEditor;
+    pUI->Init();
+    pUI->SetName("TileMapEditor");
+    pUI->SetActive(false);
+    m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 }
 
 void DEditorMgr::ImGuiProgress()

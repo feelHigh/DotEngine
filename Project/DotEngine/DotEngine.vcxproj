@@ -78,7 +78,7 @@
     <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)External\Library\Engine</OutDir>
+    <OutDir>$(SolutionDir)External\Library\Engine\</OutDir>
     <IncludePath>$(SolutionDir)External\Include\;$(SolutionDir)External\Include\Engine\ImGui\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
     <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
