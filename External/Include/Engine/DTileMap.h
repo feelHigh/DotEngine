@@ -31,6 +31,14 @@ public:
     void SetAtlasTexture(Ptr<DTexture> _Atlas);
     void SetAtlasTileSize(Vec2 _TileSize);
 
+    void SetTile(int _Row, int _Col, UINT _ImgIdx); // 특정 Tile 사용 (디폴트 0,0 지점에 있는 타일 기준으로 렌더링)
+
+public:
+    Vec2 GetRowCol() { return m_RowCol; }
+    Vec2 GetTileSize() { return m_TileSize; }
+    Ptr<DTexture> GetAtlasTexture() { return m_TileAtlas; }
+    Vec2 GetAtlasTileSize() { return m_AtlasTileSize; }
+
 public:
     virtual void SaveToFile(FILE* _File) override;
     virtual void LoadFromFile(FILE* _File) override;
@@ -41,6 +49,7 @@ private:
 private:
     int                     m_Row;              // TileMap 의 행 숫자
     int                     m_Col;              // TileMap 의 열 숫자
+    Vec2                    m_RowCol;           // TileMap 의 행, 열을 Vec2 에 담기
     Vec2                    m_TileSize;         // Tile 1개의 크기
 
     Ptr<DTexture>           m_TileAtlas;        // Tile 개별 이미지들으 보유하고 있는 아틀라스 텍스쳐

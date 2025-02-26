@@ -14,6 +14,7 @@ DTileMap::DTileMap()
 	: DRenderComponent(COMPONENT_TYPE::TILEMAP)
 	, m_Row(1)
 	, m_Col(1)
+	, m_RowCol(1, 1)
 	, m_AtlasMaxRow(0)
 	, m_AtlasMaxCol(0)
 	, m_Buffer(nullptr)
@@ -77,6 +78,9 @@ void DTileMap::SetRowCol(UINT _Row, UINT _Col)
 	m_Row = _Row;
 	m_Col = _Col;
 
+	// For TileMapUI
+	m_RowCol = Vec2(_Row, _Col);
+
 	ChangeTileMapSize();
 
 	// 타일 개수
@@ -134,12 +138,22 @@ void DTileMap::SetAtlasTileSize(Vec2 _TileSize)
 	}
 }
 
+void DTileMap::SetTile(int _Row, int _Col, UINT _ImgIdx)
+{
+	if (_Row < 0 || _Row >= m_Row || _Col < 0 || _Col >= m_Col)
+		return;
+
+	int idx = _Row * m_Col + _Col;
+	m_vecTileInfo[idx].ImgIdx = _ImgIdx;
+}
+
 void DTileMap::SaveToFile(FILE* _File)
 {
 	SaveDataToFile(_File);
 
-	fwrite(&m_Col, sizeof(int), 1, _File);
 	fwrite(&m_Row, sizeof(int), 1, _File);
+	fwrite(&m_Col, sizeof(int), 1, _File);
+	fwrite(&m_RowCol, sizeof(Vec2), 1, _File);
 
 	fwrite(&m_TileSize, sizeof(Vec2), 1, _File);
 	fwrite(&m_AtlasTileSize, sizeof(Vec2), 1, _File);
@@ -157,8 +171,9 @@ void DTileMap::LoadFromFile(FILE* _File)
 {
 	LoadDataFromFile(_File);
 
-	fread(&m_Col, sizeof(int), 1, _File);
 	fread(&m_Row, sizeof(int), 1, _File);
+	fread(&m_Col, sizeof(int), 1, _File);
+	fread(&m_RowCol, sizeof(int), 1, _File);
 
 	SetRowCol(m_Row, m_Col);
 

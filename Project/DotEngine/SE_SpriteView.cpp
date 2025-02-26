@@ -9,7 +9,7 @@ SE_SpriteView::SE_SpriteView()
     , m_SpriteHeight(0)
     , m_OffsetX(0)
     , m_OffsetY(0)
-    , m_ZoomScale(5.67f)
+    , m_ZoomScale(8.57f)
     , m_Slice(0, 0)
     , m_CanvasScroll(ImVec2(0.f, 0.f))
 {

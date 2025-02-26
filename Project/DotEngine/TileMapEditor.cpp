@@ -28,8 +28,8 @@ void TileMapEditor::Init()
 	m_TileMapView->m_Owner = this;
 	m_TileSetView->m_Owner = this;
 
-	m_TileSetView->SetTileSetTex(DAssetMgr::GetInst()->Load<DTexture>(L"Texture\\NewForest\\Tile_NewForestSecondFloor.png"
-		, L"Texture\\NewForest\\Tile_NewForestSecondFloor.png"));
+	m_TileSetView->SetTileSetTex(DAssetMgr::GetInst()->Load<DTexture>(L"Texture\\NewForest\\Tile_NewForestFloor.png"
+																	, L"Texture\\NewForest\\Tile_NewForestFloor.png"));
 }
 
 void TileMapEditor::Update()

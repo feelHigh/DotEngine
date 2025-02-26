@@ -1,21 +1,19 @@
 #include "pch.h"
 #include "TE_TileSetView.h"
 
-#include "TE_TileMapView.h"
+#include "SE_SpriteView.h"
 
 // New variables for splitting settings
-static int columns = 3;                 // Number of columns
-static int rows = 3;                    // Number of rows
-static int tile_width = 32;             // Tile width (default)
-static int tile_height = 32;            // Tile height (default)
-static ImVec2 selected_tile(-1, -1);    // Selected tile (row, column)
+static int columns = 3;                // Number of columns
+static int rows = 3;                   // Number of rows
+static int sprite_width = 32;          // Sprite width (default)
+static int sprite_height = 32;         // Sprite height (default)
+static ImVec2 selected_sprite(-1, -1); // Selected sprite (row, column)
 
 // Highlight and selection colors
-//static ImU32 highlight_color2 = IM_COL32(173, 216, 230, 100);    // Light blue
-//static ImU32 selection_color2 = IM_COL32(0, 191, 255, 150);      // Deeper blue
-static ImU32 highlight_color2 = IM_COL32(0, 0, 0, 25);
-static ImU32 selection_color2 = IM_COL32(0, 0, 0, 0);
-static ImU32 border_color2 = IM_COL32(255, 255, 255, 127);
+static ImU32 highlight_color = IM_COL32(255, 255, 255, 10);    // Light blue
+static ImU32 selection_color = IM_COL32(255, 255, 255, 50);      // Deeper blue
+static ImU32 border_color = IM_COL32(146, 190, 200, 255);       // Black border for highlight
 
 TE_TileSetView::TE_TileSetView()
     : m_TileSetTex(nullptr)
@@ -30,6 +28,7 @@ TE_TileSetView::~TE_TileSetView()
 
 void TE_TileSetView::Init()
 {
+
 }
 
 void TE_TileSetView::Update()
@@ -40,18 +39,18 @@ void TE_TileSetView::Update()
     static ImVec2 v_CanvasScroll(0.f, 0.f);
     static bool b_EnableContextMenu = true;
 
-    // Add ImGui inputs for tile sheet splitting
-    ImGui::Text("Tile Set");
+    // Add ImGui inputs for sprite sheet splitting
+    ImGui::Text("TileSet");
     ImGui::InputInt("Columns", &columns);
     ImGui::InputInt("Rows", &rows);
-    ImGui::InputInt("Tile Width", &tile_width);
-    ImGui::InputInt("Tile Height", &tile_height);
+    ImGui::InputInt("Tile Width", &sprite_width);
+    ImGui::InputInt("Tile Height", &sprite_height);
 
     // Validate inputs
     columns = max(columns, 1);
     rows = max(rows, 1);
-    tile_width = max(tile_width, 1);
-    tile_height = max(tile_height, 1);
+    sprite_width = max(sprite_width, 1);
+    sprite_height = max(sprite_height, 1);
     //-----
     // Calculate the image's scaled dimensions
     ImVec2 scaled_size = ImVec2(
@@ -76,7 +75,7 @@ void TE_TileSetView::Update()
     draw_list->AddRect(canvas_p0, canvas_p1, IM_COL32(255, 255, 255, 255));   // Border
 
     // Invisible button to catch interactions
-    ImGui::InvisibleButton("canvas2", canvas_sz, ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight);
+    ImGui::InvisibleButton("canvas", canvas_sz, ImGuiButtonFlags_MouseButtonLeft | ImGuiButtonFlags_MouseButtonRight);
     const bool is_hovered = ImGui::IsItemHovered();
     const bool is_active = ImGui::IsItemActive();
     const ImVec2 origin(canvas_p0.x + v_CanvasScroll.x, canvas_p0.y + v_CanvasScroll.y);
@@ -110,39 +109,39 @@ void TE_TileSetView::Update()
     {
         for (int col = 0; col < columns; ++col)
         {
-            // Calculate tile rectangle
-            ImVec2 tile_p0 = ImVec2(
-                canvas_p0.x + col * (tile_width * m_WheelScale),
-                canvas_p0.y + row * (tile_height * m_WheelScale)
+            // Calculate sprite rectangle
+            ImVec2 sprite_p0 = ImVec2(
+                canvas_p0.x + col * (sprite_width * m_WheelScale),
+                canvas_p0.y + row * (sprite_height * m_WheelScale)
             );
-            ImVec2 tile_p1 = ImVec2(
-                tile_p0.x + (tile_width * m_WheelScale),
-                tile_p0.y + (tile_height * m_WheelScale)
+            ImVec2 sprite_p1 = ImVec2(
+                sprite_p0.x + (sprite_width * m_WheelScale),
+                sprite_p0.y + (sprite_height * m_WheelScale)
             );
 
             // Determine color for the rectangle
-            ImU32 rect_color = highlight_color2;
-            if (selected_tile.x == row && selected_tile.y == col)
-                rect_color = selection_color2;
+            ImU32 rect_color = highlight_color;
+            if (selected_sprite.x == row && selected_sprite.y == col)
+                rect_color = selection_color;
 
             // Draw the filled rectangle (highlight)
-            draw_list->AddRectFilled(tile_p0, tile_p1, rect_color);
+            draw_list->AddRectFilled(sprite_p0, sprite_p1, rect_color);
 
             // Draw the border
-            draw_list->AddRect(tile_p0, tile_p1, border_color2);
+            draw_list->AddRect(sprite_p0, sprite_p1, border_color);
 
-            // Check for mouse click to select the tile
+            // Check for mouse click to select the sprite
             if (is_hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
             {
-                if (io.MousePos.x >= tile_p0.x && io.MousePos.x <= tile_p1.x &&
-                    io.MousePos.y >= tile_p0.y && io.MousePos.y <= tile_p1.y)
+                if (io.MousePos.x >= sprite_p0.x && io.MousePos.x <= sprite_p1.x &&
+                    io.MousePos.y >= sprite_p0.y && io.MousePos.y <= sprite_p1.y)
                 {
-                    selected_tile = ImVec2(row, col);
-                    GetTileMapView()->SetTargetTile(m_TileSetTex, Vec2(col * tile_width, row * tile_height), Vec2(tile_width, tile_height));
+                    selected_sprite = ImVec2(row, col);
                 }
             }
         }
     }
+
 
     draw_list->PopClipRect();
 }
@@ -156,4 +155,3 @@ void TE_TileSetView::SetTileSetTex(Ptr<DTexture> _Tex)
 
     m_WidthSize = (float)m_TileSetTex->GetWidth();
 }
-

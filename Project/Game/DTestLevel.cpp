@@ -44,6 +44,10 @@ void DTestLevel::CreateTestLevel()
 
 	CreatePrefab();
 
+	// Sound 재생
+	Ptr<DSound> pSound = DAssetMgr::GetInst()->FindAsset<DSound>(L"Sound\\1_MainTheme.wav");
+	//pSound->Play(0, 0.4f, false);
+
 	// Level 생성
 	DLevel* pLevel = new DLevel;
 
@@ -111,8 +115,8 @@ void DTestLevel::CreateTestLevel()
 	pFG->AddComponent(new DTransform);
 	pFG->AddComponent(new DMeshRender);
 
-	pFG->Transform()->SetRelativePos(0.f, 124.f, 400.f);
-	pFG->Transform()->SetRelativeScale(512.f, 256.f, 1.f);
+	pFG->Transform()->SetRelativePos(0.f, 158.f, 400.f);
+	pFG->Transform()->SetRelativeScale(384.f, 192.f, 1.f);
 
 	pFG->MeshRender()->SetMesh(DAssetMgr::GetInst()->FindAsset<DMesh>(L"RectMesh"));
 	//pFG->MeshRender()->SetMaterial(DAssetMgr::GetInst()->FindAsset<DMaterial>(L"Std2DMtrl"));
@@ -124,7 +128,7 @@ void DTestLevel::CreateTestLevel()
 	pLevel->AddObject(2, pFG);
 
 	// 플레이어 오브젝트
-	DGameObject* pPlayer = new DGameObject;
+	/*DGameObject* pPlayer = new DGameObject;
 	pPlayer->SetName(L"Player");
 	pPlayer->AddComponent(new DTransform);
 	pPlayer->AddComponent(new DMeshRender);
@@ -145,7 +149,7 @@ void DTestLevel::CreateTestLevel()
 	pPlayer->PaperFlipbook()->AddFlipbook(1, pFlipbook);
 	pPlayer->PaperFlipbook()->Play(1, 6, true);
 
-	pLevel->AddObject(3, pPlayer);
+	pLevel->AddObject(3, pPlayer);*/
 
 
 	// Effect Object
@@ -167,22 +171,24 @@ void DTestLevel::CreateTestLevel()
 	pLevel->AddObject(4, pMonster);*/
 
 	// TileMap Object
-	DGameObject* pTileMapObj = new DGameObject;
-	pTileMapObj->SetName(L"TileMap");
+	//DGameObject* pTileMapObj = new DGameObject;
+	//pTileMapObj->SetName(L"TileMap");
 
-	pTileMapObj->AddComponent(new DTransform);
-	pTileMapObj->AddComponent(new DTileMap);
+	//pTileMapObj->AddComponent(new DTransform);
+	//pTileMapObj->AddComponent(new DTileMap);
 
-	pTileMapObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 200.f));
+	//pTileMapObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 200.f));
 
-	pTileMapObj->TileMap()->SetRowCol(2, 2);
-	pTileMapObj->TileMap()->SetTileSize(Vec2(512.f, 384.f));
+	//pTileMapObj->TileMap()->SetRowCol(5, 5);
+	//pTileMapObj->TileMap()->SetTileSize(Vec2(64.f, 64.f));
 
-	Ptr<DTexture> pTileAtlas = DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\TILE.bmp");
-	pTileMapObj->TileMap()->SetAtlasTexture(pTileAtlas);
-	pTileMapObj->TileMap()->SetAtlasTileSize(Vec2(512.f, 384.f));
+	//Ptr<DTexture> pTileAtlas = DAssetMgr::GetInst()->FindAsset<DTexture>(L"Texture\\TILE.bmp");
+	//pTileMapObj->TileMap()->SetAtlasTexture(pTileAtlas);
+	//pTileMapObj->TileMap()->SetAtlasTileSize(Vec2(64.f, 64.f));
 
-	pLevel->AddObject(4, pTileMapObj);
+	//pTileMapObj->TileMap()->SetTile(0, 0, 1);	// SetTile Test 
+
+	//pLevel->AddObject(4, pTileMapObj);
 
 
 	// Particle Object
