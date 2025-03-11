@@ -42,10 +42,10 @@ DRenderMgr::~DRenderMgr()
 
 void DRenderMgr::Init()
 {
-	// AssetMgr 가 초기화될때 만들어둔 후처리용 텍스쳐를 참조한다.
+	// Refer to the texture for post-processing created when AssetMgr is initialized.
 	m_PostProcessTex = DAssetMgr::GetInst()->FindAsset<DTexture>(L"PostProcessTex");
 
-	// 디버그 렌더링용 게임 오브젝트
+	// Game Object for Debug Rendering
 	m_DebugObject = new DGameObject;
 	m_DebugObject->AddComponent(new DTransform);
 	m_DebugObject->AddComponent(new DMeshRender);
@@ -60,7 +60,7 @@ void DRenderMgr::Tick()
 
 	RenderStart();
 
-	// Level 이 Player 상태인 경우, Level 내에 있는 카메라 시점으로 렌더링하기
+	// If Level is in Player state, render to camera view within Level
 	if (PLAY == pCurLevel->GetState())
 	{
 		for (size_t i = 0; i < m_vecCam.size(); ++i)
@@ -72,7 +72,7 @@ void DRenderMgr::Tick()
 		}
 	}
 
-	// Level 이 Stop 이나 Pause 인 경우, Editor 용 카메라 시점으로 렌더링 하기
+	// If the Level is Stop or Pause, render to camera view for Editor
 	else
 	{
 		if (nullptr != m_EditorCamera)
@@ -84,7 +84,7 @@ void DRenderMgr::Tick()
 	// Debug Render
 	RenderDebugShape();
 
-	// Time 정보 출력
+	// Time information rendering
 	DTimeMgr::GetInst()->Render();
 
 	// Clear
@@ -93,11 +93,11 @@ void DRenderMgr::Tick()
 
 void DRenderMgr::RegisterCamera(DCamera* _Cam, int _CamPriority)
 {
-	// 카메라 우선순위에 따라서 벡터의 공간의 마련되어야 한다.
+	// A space for vectors should be provided according to the camera priority.
 	if (m_vecCam.size() <= _CamPriority + 1)
 		m_vecCam.resize(_CamPriority + 1);
 
-	// 카메라 우선순위에 맞는 위치에 넣는다
+	// Put it in a position that matches the priority of the camera
 	m_vecCam[_CamPriority] = _Cam;
 }
 
@@ -111,7 +111,7 @@ void DRenderMgr::PostProcessCopy()
 
 void DRenderMgr::RenderStart()
 {
-	// 렌더타겟 지정
+	// Set Render Target
 	Ptr<DTexture> pRTTex = DAssetMgr::GetInst()->FindAsset<DTexture>(L"RenderTargetTex");
 	Ptr<DTexture> pDSTex = DAssetMgr::GetInst()->FindAsset<DTexture>(L"DepthStencilTex");
 	CONTEXT->OMSetRenderTargets(1, pRTTex->GetRTV().GetAddressOf(), pDSTex->GetDSV().Get());
@@ -124,7 +124,7 @@ void DRenderMgr::RenderStart()
 	g_GlobalData.g_Resolution = Vec2((float)pRTTex->GetWidth(), (float)pRTTex->GetHeight());
 	g_GlobalData.g_Light2DCount = (int)m_vecLight2D.size();
 
-	// Light2D 정보 업데이트 및 바인딩
+	// Update and bind Light2D information
 	vector<tLightInfo> vecLight2DInfo;
 	for (size_t i = 0; i < m_vecLight2D.size(); ++i)
 	{
@@ -140,7 +140,7 @@ void DRenderMgr::RenderStart()
 	m_Light2DBuffer->Binding(11);
 
 
-	// GlobalData 바인딩
+	// Global Data Binding
 	static DConstantBuffer* pGlobalCB = DDevice::GetInst()->GetConstBuffer(CB_TYPE::GLOBAL);
 	pGlobalCB->SetData(&g_GlobalData);
 	pGlobalCB->Binding();
@@ -157,7 +157,7 @@ void DRenderMgr::RenderDebugShape()
 
 	for (; iter != m_DebugShapeList.end(); )
 	{
-		// 디버그 요청 모양에 맞는 메시를 가져옴
+		// Gets the mesh that matches the debug request shape
 		switch ((*iter).Shape)
 		{
 		case DEBUG_SHAPE::RECT:
@@ -168,23 +168,23 @@ void DRenderMgr::RenderDebugShape()
 			break;
 		}
 
-		// 위치 세팅
+		// Position setting
 		m_DebugObject->Transform()->SetWorldMatrix((*iter).matWorld);
 
-		// 재질 세팅
+		// Material setting
 		m_DebugObject->MeshRender()->GetMaterial()->SetScalarParam(VEC4_0, (*iter).vColor);
 
-		// 깊이판정 여부에 따라서, 쉐이더의 깊이판정 방식을 결정한다.
+		// According to whether or not the depth is determined, the depth determination method of the shader is determined
 		if ((*iter).DepthTest)
 			m_DebugObject->MeshRender()->GetMaterial()->GetShader()->SetDSType(DS_TYPE::LESS);
 		else
 			m_DebugObject->MeshRender()->GetMaterial()->GetShader()->SetDSType(DS_TYPE::NO_TEST_NO_WRITE);
 
-		// 렌더링
+		// Rendering
 		m_DebugObject->MeshRender()->Render();
 
 
-		// 수명이 다한 디버그 정보를 삭제
+		// Delete end-of-life debug information
 		(*iter).Age += EngineDT;
 		if ((*iter).LifeTime < (*iter).Age)
 		{

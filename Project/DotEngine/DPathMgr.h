@@ -9,7 +9,6 @@ class DPathMgr
 	SINGLE(DPathMgr);
 public:
 	void Init();
-	void render();
 
 public:
 	const wstring& GetContentPath() { return m_Content; }

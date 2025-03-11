@@ -65,7 +65,7 @@ void DTaskMgr::ExecuteTask()
 				continue;
 			}
 
-			// GC ¿¡ ³Ö±â
+			// Garbage Collector
 			pObject->m_Dead = true;
 			m_GC.push_back(pObject);
 		}

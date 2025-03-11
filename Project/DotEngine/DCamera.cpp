@@ -45,7 +45,7 @@ DCamera::~DCamera()
 
 void DCamera::Begin()
 {
-	// 카메라를 등록
+	// Register Camera
 	if (-1 != m_Priority)
 	{
 		DRenderMgr::GetInst()->RegisterCamera(this, m_Priority);
@@ -54,26 +54,16 @@ void DCamera::Begin()
 
 void DCamera::FinalTick()
 {
-	/*Vec3 vWorldPos = Transform()->GetRelativePos();
-
-	if (KEY_PRESSED(KEY::LEFT))
-		vWorldPos.x -= DT * 1.f;
-	if(KEY_PRESSED(KEY::RIGHT))
-		vWorldPos.x += DT * 1.f;
-
-	Transform()->SetRelativePos(vWorldPos);*/
-
 	// View Space 란 카메라가 좌표계의 기준이 되는 좌표계
-	// 1. 카메라가 원점에 존재
-	// 2. 카메라가 바라보는 방향이 Z 축
+	// 1. Camera is at the origin
+	// 2. The camera is looking at the Z-axis
 
-	// 1. 카메라가 있는 곳이 원점이었을 경우를 기준으로한 물체들의 좌표를 알아내야 한다.
-	// 2. 카메라가 월드에서 바라보던 방향을 Z 축으로 돌려두어야 한다.
-	//    물체들도 같이 회전을 한다.
+	// 1. Find the coordinates of objects based on where the camera is located at the origin.
+	// 2. The camera should turn the direction it was looking at from the world on the Z axis.
+	// Objects rotate together.
 
-
-	// View 행렬을 계산한다.
-	// View 행렬은 World Space -> View Space 로 변경할때 사용하는 행렬		
+	// Calculate the View matrix.
+	// The matrix used to change the View matrix to World Space -> View Space
 	Matrix matTrans = XMMatrixTranslation(-Transform()->GetRelativePos().x, -Transform()->GetRelativePos().y, -Transform()->GetRelativePos().z);
 
 	Matrix matRot;
@@ -88,22 +78,21 @@ void DCamera::FinalTick()
 	m_matView = matTrans * matRot;
 
 
-	// Projection Space 투영 좌표계 (NDC)
+	// Projection Space Projection Coordinate System (NDC)
 	if (PROJ_TYPE::ORTHOGRAPHIC == m_ProjType)
 	{
-		// 1. 직교투영 (Orthographic)
-		// 투영을 일직선으로
-		// 시야 범위를 NDC 로 압축
+		// 1. Orthographic
+		// Projection in a straight line
+		// Compressing the field of view to NDC
 		m_matProj = XMMatrixOrthographicLH(m_Width * m_ProjectionScale, m_Height * m_ProjectionScale, 1.f, m_Far);
 	}
 
 	else
 	{
-		// 2. 원근투영 (Perspective)		
+		// 2. Perspective
 		m_matProj = XMMatrixPerspectiveFovLH(m_FOV, m_AspectRatio, 1.f, m_Far);
 	}
 }
-
 
 void DCamera::SortGameObject()
 {
@@ -162,10 +151,10 @@ void DCamera::SortGameObject()
 
 void DCamera::Render()
 {
-	// 오브젝트 분류
+	// Sort Object
 	SortGameObject();
 
-	// 물체가 렌더링될 때 사용할 View, Proj 행렬
+	// View, Proj matrix to use when objects are rendered
 	g_Trans.matView = m_matView;
 	g_Trans.matProj = m_matProj;
 
@@ -219,11 +208,11 @@ void DCamera::Render()
 
 void DCamera::Render_Effect()
 {
-	// 렌더타겟 변경
+	// Change Render Target
 	Ptr<DTexture> pEffectTarget = DAssetMgr::GetInst()->FindAsset<DTexture>(L"EffectTargetTex");
 	Ptr<DTexture> pEffectDepth = DAssetMgr::GetInst()->FindAsset<DTexture>(L"EffectDepthStencilTex");
 
-	// 클리어
+	// Clear Render Target
 	CONTEXT->ClearRenderTargetView(pEffectTarget->GetRTV().Get(), Vec4(0.f, 0.f, 0.f, 0.f));
 	CONTEXT->ClearDepthStencilView(pEffectDepth->GetDSV().Get(), D3D11_CLEAR_STENCIL | D3D11_CLEAR_DEPTH, 1.f, 0);
 
@@ -241,7 +230,7 @@ void DCamera::Render_Effect()
 		m_vecEffect[i]->Render();
 	}
 
-	// BlurTarget 으로 변경
+	// Change to BlurTarget
 	Ptr<DTexture> pEffectBlurTarget = DAssetMgr::GetInst()->FindAsset<DTexture>(L"EffectBlurTargetTex");
 	Ptr<DMaterial> pBlurMtrl = DAssetMgr::GetInst()->FindAsset<DMaterial>(L"BlurMtrl");
 	Ptr<DMesh> pRectMesh = DAssetMgr::GetInst()->FindAsset<DMesh>(L"RectMesh");
@@ -256,7 +245,7 @@ void DCamera::Render_Effect()
 	pRectMesh->Render_Particle(2);
 
 
-	// 원래 렌더타겟으로 변경
+	// Revert to original Render Target
 	Ptr<DTexture> pRTTex = DAssetMgr::GetInst()->FindAsset<DTexture>(L"RenderTargetTex");
 	Ptr<DTexture> pDSTex = DAssetMgr::GetInst()->FindAsset<DTexture>(L"DepthStencilTex");
 	Ptr<DMaterial> pEffectMergeMtrl = DAssetMgr::GetInst()->FindAsset<DMaterial>(L"EffectMergeMtrl");

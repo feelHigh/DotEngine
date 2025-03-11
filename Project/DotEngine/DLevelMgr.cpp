@@ -67,7 +67,7 @@ bool DLevelMgr::ChangeLevel(DLevel* _NextLevel)
 
 	m_CurLevel = _NextLevel;
 
-	// 레벨이 변경된 이벤트 ON
+	// If level has been changed -> event triggered
 	LevelChanged();
 
 	return true;

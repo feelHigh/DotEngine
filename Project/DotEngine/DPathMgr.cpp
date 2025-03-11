@@ -14,24 +14,19 @@ DPathMgr::~DPathMgr()
 
 void DPathMgr::Init()
 {
-	// 실행경로를 얻어낸다
 	wchar_t szBuffer[256] = {};
 	GetCurrentDirectory(256, szBuffer);
 
-	// bin 폴더의 상위폴더로 접근한다.
+	// Access the parent folder of the bin folder
 	GetParentPath(szBuffer);
 	GetParentPath(szBuffer);
 
-	// Content 경로
+	// Content path
 	m_Content = szBuffer;
 	m_Content += L"\\Content\\";
 
-	// Solution 경로
+	// Solution path
 	m_Solution = szBuffer;
-}
-
-void DPathMgr::render()
-{
 }
 
 void DPathMgr::GetParentPath(_Inout_ wchar_t* _Buffer)

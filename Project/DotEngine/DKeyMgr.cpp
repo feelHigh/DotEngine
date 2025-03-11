@@ -47,20 +47,20 @@ void DKeyMgr::Init()
 
 void DKeyMgr::Tick()
 {
-	// MainWindow 가 포커싱 상태이다.
+	// MainWindow is in a state of focus
 	if (DEngine::GetInst()->GetMainWnd() == GetFocus())
 	{
 		for (UINT i = 0; i < (UINT)m_vecKeyInfo.size(); ++i)
 		{
-			// 지금 키가 눌려있는지 체크
+			// Check if the key is pressed right now
 			if (0x8001 & GetAsyncKeyState(g_RealKey[(UINT)m_vecKeyInfo[i].eKey]))
 			{
-				// 이전에도 눌려있었는지 
+				// If pressed before
 				if (m_vecKeyInfo[i].bPressed)
 				{
 					m_vecKeyInfo[i].eKeyState = KEY_STATE::PRESSED;
 				}
-				// 이전에는 눌려있지 않았고, 지금은 눌려있다.
+				// If not pressed before and pressed now
 				else
 				{
 					m_vecKeyInfo[i].eKeyState = KEY_STATE::TAP;
@@ -69,16 +69,16 @@ void DKeyMgr::Tick()
 				m_vecKeyInfo[i].bPressed = true;
 			}
 
-			// 키가 안눌려있다.
+			// The key is not pressed
 			else
 			{
-				// 이전에는 눌려있었다.
+				// If pressed before
 				if (m_vecKeyInfo[i].bPressed)
 				{
 					m_vecKeyInfo[i].eKeyState = KEY_STATE::RELEASED;
 				}
 
-				// 이전에도 안눌려있고, 지금도 안눌려있다.
+				// If not pressed before and pressed now
 				else
 				{
 					m_vecKeyInfo[i].eKeyState = KEY_STATE::NONE;
@@ -88,7 +88,7 @@ void DKeyMgr::Tick()
 			}
 		}
 
-		// 마우스 좌표 계산
+		// Calculate mouse coordinates
 		if (m_MouseCapture)
 		{
 			POINT ptMousePos = { };
@@ -114,7 +114,7 @@ void DKeyMgr::Tick()
 
 	}
 
-	// 윈도우의 포커싱이 해제됨
+	// Windows is off-focusing
 	else
 	{
 		for (UINT i = 0; i < (UINT)m_vecKeyInfo.size(); ++i)

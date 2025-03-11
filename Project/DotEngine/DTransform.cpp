@@ -19,14 +19,15 @@ DTransform::~DTransform()
 
 void DTransform::FinalTick()
 {
-	// 오브젝트의 월드행렬 계산
-	// 크기행렬
+	// Object world matrix calculation
+	// 
+	// Size Matrix
 	Matrix matScale = XMMatrixScaling(m_RelativeScale.x, m_RelativeScale.y, m_RelativeScale.z);
 
-	// 이동 행렬
+	// Position Matrix
 	Matrix matTranslation = XMMatrixTranslation(m_RelativePos.x, m_RelativePos.y, m_RelativePos.z);
 
-	// 회전 행렬
+	// Roatation Matrix
 	Matrix matRot = XMMatrixRotationX(m_RelativeRotation.x)
 					* XMMatrixRotationY(m_RelativeRotation.y)
 					* XMMatrixRotationZ(m_RelativeRotation.z);
@@ -34,7 +35,7 @@ void DTransform::FinalTick()
 	m_matWorld = matScale * matRot * matTranslation;
 
 
-	// 방향벡터 계산
+	// Direction vector calcualtion
 	static Vec3 vDefaultAxis[3] =
 	{
 		Vec3(1.f, 0.f, 0.f),
@@ -49,10 +50,10 @@ void DTransform::FinalTick()
 	}
 
 
-	// 부모 오브젝트가 있는지 확인
+	// If it has a parent object
 	if (GetOwner()->GetParent())
 	{
-		// 부모의 월드행렬을 곱해서 최종 월드행렬을 계산함
+		// Compute the final world matrix by multiplying the parent's world matrix
 		const Matrix& matParentWorldMat = GetOwner()->GetParent()->Transform()->GetWorldMat();
 
 		if (m_IndependentScale)
@@ -68,14 +69,14 @@ void DTransform::FinalTick()
 			m_matWorld *= matParentWorldMat;
 		}
 
-		// 최종 월드기준 오브젝트의 방향벡터를 구함
+		// Compute final world matrix for the object direction vector
 		for (int i = 0; i < 3; ++i)
 		{
 			m_WorldDir[i] = XMVector3TransformNormal(vDefaultAxis[i], m_matWorld);
 		}
 	}
 
-	// 부모가 없으면, RelativeDir 이 곧 WorldDir
+	// If there is no parent object, RelativeDir == WorldDir
 	else
 	{
 		for (int i = 0; i < 3; ++i)

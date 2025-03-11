@@ -15,18 +15,18 @@ public:
     int Execute();
 
 protected:
-    // 1 개의 그룹당 스레드 수
+    // Number of threads per group
     const UINT                  m_ThreadPerGroupX;
     const UINT                  m_ThreadPerGroupY;
     const UINT                  m_ThreadPerGroupZ;
 
 
-    // 그룹 수
+    // Group Count
     UINT                        m_GroupX;
     UINT                        m_GroupY;
     UINT                        m_GroupZ;
 
-    // 상수 데이터 전달 용도
+    // Constant Data pass on usage
     tMtrlConst                  m_Const;
 
 private:

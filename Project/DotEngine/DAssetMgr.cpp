@@ -33,14 +33,14 @@ Ptr<DAsset> DAssetMgr::FindAsset(ASSET_TYPE _Type, const wstring& _Key)
 Ptr<DTexture> DAssetMgr::CreateTexture(wstring _strKey, UINT _Width, UINT _Height
 	, DXGI_FORMAT _Format, UINT _Flags, D3D11_USAGE _Usage)
 {
-	// 중복키 검사
+	// Duplicate key check
 	Ptr<DTexture> pTexture = FindAsset<DTexture>(_strKey);
 	assert(!pTexture.Get());
 
 	pTexture = new DTexture;
 	if (FAILED(pTexture->Create(_Width, _Height, _Format, _Flags, _Usage)))
 	{
-		MessageBox(nullptr, L"텍스쳐 생성 실패", L"텍스쳐 생성 실패", MB_OK);
+		MessageBox(nullptr, L"Failed loading texture.(DAssetMgr)", L"Failed loading texture.(DAssetMgr)", MB_OK);
 		return nullptr;
 	}
 
@@ -53,14 +53,14 @@ Ptr<DTexture> DAssetMgr::CreateTexture(wstring _strKey, UINT _Width, UINT _Heigh
 
 Ptr<DTexture> DAssetMgr::CreateTexture(wstring _strKey, ComPtr<ID3D11Texture2D> _Tex2D)
 {
-	// 중복키 검사
+	// Duplicate key check
 	Ptr<DTexture> pTexture = FindAsset<DTexture>(_strKey);
 	assert(!pTexture.Get());
 
 	pTexture = new DTexture;
 	if (FAILED(pTexture->Create(_Tex2D)))
 	{
-		MessageBox(nullptr, L"텍스쳐 생성 실패", L"텍스쳐 생성 실패", MB_OK);
+		MessageBox(nullptr, L"Failed loading texture.(DAssetMgr)", L"Failed loading texture.(DAssetMgr)", MB_OK);
 		return nullptr;
 	}
 
@@ -85,6 +85,6 @@ void DAssetMgr::DeleteAsset(ASSET_TYPE _Type, const wstring& _Key)
 	assert(iter != m_mapAsset[(UINT)_Type].end());
 	m_mapAsset[(UINT)_Type].erase(iter);
 
-	// Asset 변경 알림
+	// Asset Change Notification
 	DTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
 }

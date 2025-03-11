@@ -57,22 +57,22 @@ void DLayer::FinalTick()
 
 void DLayer::AddObject(DGameObject* _Object, bool _bChildMove)
 {
-	// 1. 오브젝트가 다른 레이어 소속인경우
+	// 1. If the object belongs to another layer
 	if (-1 != _Object->GetLayerIdx())
 	{
 		assert(_Object->GetLayerIdx() != m_LayerIdx);
 
-		// 기존에 소속된 레이어에서 빠져나와야한다.
+		// Have to get out of the existing layer
 		_Object->DisconnectWithLayer();
 	}
 
-	// 2. 최상위 오브젝트인 경우
+	// 2. If top-level object
 	if (nullptr == _Object->GetParent())
 	{
 		m_Parents.push_back(_Object);
 	}
 
-	// 자식들까지 이동시킬지 말지
+	// If children objects will also be moved
 	static list<DGameObject*> queue;
 	queue.clear();
 	queue.push_back(_Object);

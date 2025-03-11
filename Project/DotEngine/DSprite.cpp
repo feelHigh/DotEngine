@@ -60,7 +60,7 @@ int DSprite::Save(const wstring& _FilePath)
 	if (nullptr == File)
 		return E_FAIL;
 
-	// Atlas 참조정보 저장
+	// Save Atlas Reference Information
 	SaveAssetRef(m_Atlas, File);
 
 	fwrite(&m_LeftTopUV, sizeof(Vec2), 1, File);
@@ -83,7 +83,7 @@ int DSprite::Load(const wstring& _FilePath)
 		return E_FAIL;
 	}
 
-	// Atlas 키, 경로 불러오기
+	// Load Atlas Reference Information
 	LoadAssetRef(m_Atlas, File);
 
 	fread(&m_LeftTopUV, sizeof(Vec2), 1, File);

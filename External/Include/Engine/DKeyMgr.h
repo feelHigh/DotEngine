@@ -36,9 +36,9 @@ enum class KEY_STATE
 
 struct tKeyInfo
 {
-	KEY			eKey;		// 키의 종류
-	KEY_STATE	eKeyState;	// 키의 상태값
-	bool		bPressed;	// 지금 눌려있는지
+	KEY			eKey;		// Type
+	KEY_STATE	eKeyState;	// State
+	bool		bPressed;	// If pressed
 };
 
 class DKeyMgr

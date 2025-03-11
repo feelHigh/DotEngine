@@ -33,7 +33,7 @@ int DStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount,
 
 	m_SysMemMove = _SysMemMove;
 
-	// ID3D11Buffer 를 StructuredBuffer 용도로 생성하기
+	// Create ID3D11Buffer for StructureddBuffer purposes
 	if (SB_TYPE::SRV_UAV == _Type)
 		m_Desc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 	else
@@ -64,7 +64,7 @@ int DStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount,
 		return E_FAIL;
 
 
-	// 추가버퍼 생성
+	// Create additional buffers
 	if (m_SysMemMove)
 	{
 		D3D11_BUFFER_DESC tRWBufferDesc = m_Desc;
@@ -101,7 +101,7 @@ int DStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount,
 		}
 	}
 
-	// ShaderResourceView 생성하기
+	// Create ShaderResourceView
 	D3D11_SHADER_RESOURCE_VIEW_DESC SRVDesc = {};
 
 	SRVDesc.ViewDimension = D3D_SRV_DIMENSION_BUFFER;
@@ -112,7 +112,7 @@ int DStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount,
 		return E_FAIL;
 	}
 
-	// UAV 생성
+	// Create UAV
 	if (m_Type == SB_TYPE::SRV_UAV)
 	{
 		D3D11_UNORDERED_ACCESS_VIEW_DESC Desc = {};
@@ -130,7 +130,7 @@ int DStructuredBuffer::Create(UINT _ElementSize, UINT _ElementCount,
 
 void DStructuredBuffer::SetData(void* _pData, UINT _DataSize)
 {
-	// 입력데이터가 구조화버퍼 크기보다 작아야한다.
+	// The input data must be smaller than the structured buffer size.
 	assert(_DataSize <= m_Desc.ByteWidth);
 
 	if (0 == _DataSize)
@@ -149,7 +149,7 @@ void DStructuredBuffer::SetData(void* _pData, UINT _DataSize)
 
 void DStructuredBuffer::GetData(void* _pData, UINT _DataSize)
 {
-	// 요청한 데이터 크기가 구조화버퍼 크기보다 작아야한다.
+	// The requested data size must be smaller than the structured buffer size.
 	assert(_DataSize <= m_Desc.ByteWidth);
 	assert(m_SysMemMove);
 

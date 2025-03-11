@@ -124,7 +124,7 @@ void DLevel::ChangeState(LEVEL_STATE _NextState)
 		return;
 
 
-	// Stop -> Play (정지 상태의 레벨이 시작되면, 레벨에 있던 물체들은 Begin 이 호출되어야 한다.)
+	// Stop -> Play (When the level of the stationary state starts, objects at the level should be called Begin)
 	if (STOP == m_State && PLAY == _NextState)
 	{
 		m_State = _NextState;
@@ -135,5 +135,5 @@ void DLevel::ChangeState(LEVEL_STATE _NextState)
 		m_State = _NextState;
 	}
 
-	// Play -> Stop (최초 레벨이 시작되던 시점으로 복구가 가능해야 한다.)
+	// Play -> Stop (recoverable to the point where the initial level started)
 }

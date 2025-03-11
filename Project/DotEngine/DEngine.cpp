@@ -41,7 +41,7 @@ int DEngine::Init(HWND _wnd, POINT _ptResolution, OBJECT_SAVE _SaveFunc, OBJECT_
 
 	if (FAILED(DDevice::GetInst()->Init(m_hWnd, m_ptResolution.x, m_ptResolution.y)))
 	{
-		MessageBox(nullptr, L"장치 초기화 실패", L"DDevice 초기화 실패", MB_OK);
+		MessageBox(nullptr, L"Device initialization failed.", L"Device initialization failed.(DEngine)", MB_OK);
 		return E_FAIL;
 	}
 

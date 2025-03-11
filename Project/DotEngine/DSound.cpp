@@ -29,7 +29,7 @@ int DSound::Play(int _iRoopCount, float _fVolume, bool _bOverlap)
 		assert(nullptr);
 	}
 
-	// 재생되고 있는 채널이 있는데, 중복재생을 허용하지 않았다 -> 재생 안함
+	// Ifthere is a channel that is playing, but duplicate playback was not allowed -> No playback
 	if (!_bOverlap && !m_listChannel.empty())
 	{
 		return E_FAIL;
@@ -40,7 +40,7 @@ int DSound::Play(int _iRoopCount, float _fVolume, bool _bOverlap)
 	FMOD::Channel* pChannel = nullptr;
 	DEngine::GetInst()->GetFMODSystem()->playSound(m_Sound, nullptr, false, &pChannel);
 
-	// 재생 실패
+	// Play failed
 	if (nullptr == pChannel)
 		return E_FAIL;
 

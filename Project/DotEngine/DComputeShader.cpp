@@ -32,19 +32,19 @@ int DComputeShader::Execute()
 	if (FAILED(Binding()))
 		return E_FAIL;
 
-	// 상수데이터 전달
+	// Pass on constant buffer
 	DConstantBuffer* pCB = DDevice::GetInst()->GetConstBuffer(CB_TYPE::MATERIAL);
 	pCB->SetData(&m_Const);
 	pCB->Binding_CS();
 
-	// 필요한 그룹 수 계산
+	// Calculate needed group count
 	CalcGroupNum();
 
-	// 컴퓨트 쉐이더 실행
+	// Execute compute shader
 	CONTEXT->CSSetShader(m_CS.Get(), 0, 0);
 	CONTEXT->Dispatch(m_GroupX, m_GroupY, m_GroupZ);
 
-	// 리소스 해제
+	// Clear resource
 	Clear();
 }
 
@@ -61,14 +61,14 @@ int DComputeShader::CreateComputeShader(const wstring& _RelativePath, const stri
 	{
 		if (nullptr != m_ErrBlob)
 		{
-			MessageBoxA(nullptr, (char*)m_ErrBlob->GetBufferPointer(), "쉐이더 컴파일 실패", MB_OK);
+			MessageBoxA(nullptr, (char*)m_ErrBlob->GetBufferPointer(), "Shader Compile failed.(Compute Shader)", MB_OK);
 		}
 		else
 		{
 			errno_t err = GetLastError();
 			wchar_t szErrMsg[255] = {};
 			swprintf_s(szErrMsg, 255, L"Error Code : %d", err);
-			MessageBox(nullptr, szErrMsg, L"쉐이더 컴파일 실패", MB_OK);
+			MessageBox(nullptr, szErrMsg, L"Shader Compile failed.(Compute Shader)", MB_OK);
 		}
 
 		return E_FAIL;

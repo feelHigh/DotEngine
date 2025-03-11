@@ -45,9 +45,8 @@ public:
     bool IsDead() { return m_Dead; }
 
     void DisconnectWithLayer();
-
-    // Unregister : 등록을 취소하다, 등록하는 행위를 취소하다
-    // Deregister : 등록된것을 취소하다
+    // Unregister: To revoke a registration; to revoke an act of registration
+    // Deregister: To revoke a registered item
     void DeregisterChild();
 
     GET_COMPONENT(Transform, TRANSFORM);

@@ -69,3 +69,5 @@ using std::max;
 #include "Struct.h"
 #include "Func.h"
 #include "Ptr.h"
+
+#pragma warnings(disable: 4996)

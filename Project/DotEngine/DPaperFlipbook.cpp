@@ -125,7 +125,7 @@ void DPaperFlipbook::Binding()
 {
 	if (nullptr != m_CurFrmSprite)
 	{
-		// 현재 표시해야하는 Sprite 의 정보를 Sprite 전용 상수버퍼를 통해서 GPU 에 전달
+		// Transfer the information of the Sprite that must be displayed to the GPU through the Sprite-only constant buffer
 		tSpriteInfo tInfo = {};
 
 		tInfo.LeftTopUV = m_CurFrmSprite->GetLeftTopUV();
@@ -139,7 +139,7 @@ void DPaperFlipbook::Binding()
 		CB->SetData(&tInfo);
 		CB->Binding();
 
-		// Flipbook Sprite 아틀라스 텍스쳐 전용 레지스터번호 t10 에 바인딩
+		// Bind to Register Number 'T10' (Exclusive to Flipbook Sprite Atlas Texture)
 		Ptr<DTexture> pAtlas = m_CurFrmSprite->GetAtlasTexture();
 		pAtlas->Binding(10);
 	}
@@ -159,7 +159,7 @@ void DPaperFlipbook::Clear()
 
 void DPaperFlipbook::SaveToFile(FILE* _File)
 {
-	// Flipbook 에셋 목록 저장
+	// Save Flipbook Asset List
 	size_t FlipbookCount = m_vecFlipbook.size();
 	fwrite(&FlipbookCount, sizeof(size_t), 1, _File);
 	for (size_t i = 0; i < m_vecFlipbook.size(); ++i)
@@ -167,13 +167,13 @@ void DPaperFlipbook::SaveToFile(FILE* _File)
 		SaveAssetRef(m_vecFlipbook[i], _File);
 	}
 
-	// 현재 재생중인 Flipbook 정보 저장
+	// Save Flipbook information that is currently playing
 	SaveAssetRef(m_CurFlipbook, _File);
 
-	// 현재 재생중인 Flipbook 내에서 지정된 Sprite
+	// Sprite specified within Flipbook currently playing
 	SaveAssetRef(m_CurFrmSprite, _File);
 
-	// 현재 재생중인 Flipbook 내에서 지정된 Sprite 가 몇번째 인덱스인지
+	// What index is the specified Sprite within the Flipbook that is currently playing
 	fwrite(&m_CurFrmIdx, sizeof(int), 1, _File);
 	fwrite(&m_FPS, sizeof(float), 1, _File);
 	fwrite(&m_AccTime, sizeof(float), 1, _File);
@@ -182,7 +182,7 @@ void DPaperFlipbook::SaveToFile(FILE* _File)
 
 void DPaperFlipbook::LoadFromFile(FILE* _File)
 {
-	// Flipbook 에셋 목록 불러오기
+	// Load Flipbook Asset List
 	size_t FlipbookCount = 0;
 	fread(&FlipbookCount, sizeof(size_t), 1, _File);
 	for (size_t i = 0; i < FlipbookCount; ++i)
@@ -192,13 +192,13 @@ void DPaperFlipbook::LoadFromFile(FILE* _File)
 		m_vecFlipbook.push_back(pFlipbook);
 	}
 
-	// 현재 재생중인 Flipbook 정보 로드
+	// Load Flipbook information that is currently playing
 	LoadAssetRef(m_CurFlipbook, _File);
 
-	// 현재 재생중인 Flipbook 내에서 지정된 Sprite
+	// Sprite specified within Flipbook currently playing
 	LoadAssetRef(m_CurFrmSprite, _File);
 
-	// 현재 재생중인 Flipbook 내에서 지정된 Sprite 가 몇번째 인덱스인지
+	// What index is the specified Sprite within the Flipbook that is currently playing
 	fread(&m_CurFrmIdx, sizeof(int), 1, _File);
 	fread(&m_FPS, sizeof(float), 1, _File);
 	fread(&m_AccTime, sizeof(float), 1, _File);

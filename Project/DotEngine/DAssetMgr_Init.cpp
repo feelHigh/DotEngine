@@ -35,7 +35,7 @@ void DAssetMgr::CreateEngineMesh()
 	pMesh->Create(&v, 1, &i, 1);
 	AddAsset(L"PointMesh", pMesh);
 
-	// RectMesh 생성	
+	// RectMesh
 	// 0 -- 1
 	// | \  |
 	// 3 -- 2
@@ -58,7 +58,7 @@ void DAssetMgr::CreateEngineMesh()
 	arrVtx[3].vUV = Vec2(0.f, 1.f);
 
 
-	// Index 버퍼 생성
+	// Create Index Buffer
 	UINT arrIdx[6] = {};
 	arrIdx[0] = 0;	arrIdx[1] = 1;	arrIdx[2] = 2;
 	arrIdx[3] = 0; 	arrIdx[4] = 2;	arrIdx[5] = 3;
@@ -87,13 +87,13 @@ void DAssetMgr::CreateEngineMesh()
 	float fTheta = XM_2PI / Slice;
 	float Radius = 0.5f;
 
-	// 중심점
+	// Central point
 	v.vPos = Vec3(0.f, 0.f, 0.f);
 	v.vUV = Vec2(0.5f, 0.5f);
 	v.vColor = Vec4(1.f, 1.f, 1.f, 1.f);
 	vecVtx.push_back(v);
 
-	// 테두리
+	// Border
 	float Angle = 0.f;
 	for (int i = 0; i < Slice + 1; ++i)
 	{
@@ -105,7 +105,7 @@ void DAssetMgr::CreateEngineMesh()
 		Angle += fTheta;
 	}
 
-	// 인덱스
+	// Index
 	for (int i = 0; i < Slice; ++i)
 	{
 		vecIdx.push_back(0);
@@ -133,7 +133,7 @@ void DAssetMgr::CreateEngineMesh()
 
 void DAssetMgr::CreateEngineTexture()
 {
-	// PostProcess 용도 텍스쳐 생성
+	// Create textures for Post Process usage
 	Vec2 Resolution = DDevice::GetInst()->GetResolution();
 	Ptr<DTexture> pPostProcessTex = CreateTexture(L"PostProcessTex"
 												, (UINT)Resolution.x, (UINT)Resolution.y
@@ -154,95 +154,6 @@ void DAssetMgr::CreateEngineTexture()
 
 void DAssetMgr::CreateEngineSprite()
 {
-	//Ptr<DTexture> pAtlasTex = Load<DTexture>(L"Texture\\Player\\Player_Test.png", L"Texture\\Player\\Player_Test.png");
-
-	//Ptr<DSprite> pSprite = nullptr;
-
-	//for (int i = 0; i < nSprite; ++i)
-	//{
-	//	wchar_t szKey[50] = {};
-	//	swprintf_s(szKey, 50, L"Player_Idle_Down_%d", i);
-
-	//	pSprite = new DSprite;
-	//	pSprite->Create(pAtlasTex, Vec2((float)i * 64.f, 0.f), Vec2(64.f, 64.f));
-	//	pSprite->SetBackground(Vec2(64.f, 64.f));
-
-	//	/*if (i == 2)
-	//		pSprite->SetOffset(Vec2(30.f, 0.f));*/
-
-	//	AddAsset(szKey, pSprite);
-	//}
-
-	//Ptr<DFlipbook> pFlipbook = nullptr;
-
-	//pFlipbook = new DFlipbook;
-
-	//for (int i = 0; i < nSprite; ++i)
-	//{
-	//	wchar_t szKey[50] = {};
-	//	swprintf_s(szKey, 50, L"Player_Idle_Down_%d", i);
-	//	pFlipbook->AddSprite(FindAsset<DSprite>(szKey));
-	//}
-
-	//AddAsset(L"Player_Idle_Down", pFlipbook);
-	// 여기까는 AddAsset만하고 Save/Load 안됌
-	// 여기부터 사용
-
-	/*Ptr<DTexture> pAtlasTex = Load<DTexture>(L"Texture\\Dalia-Idle.png", L"Texture\\Dalia-Idle.png");
-
-	Ptr<DSprite> pSprite = nullptr;
-
-	int nSprite = 8;
-	int nRow = 1;
-	float fPixelX = 70.f;
-	float fPixelY = 58.f;
-
-	wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
-
-	for (int i = 0; i < nSprite; ++i)
-	{
-		wchar_t Buffer[50] = {};
-		swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
-
-		pSprite = new DSprite;
-		pSprite->Create(pAtlasTex, Vec2((float)i * fPixelX, 0.f), Vec2(fPixelX, fPixelY));
-		pSprite->SetBackground(Vec2(96.f, 96.f));
-
-		pSprite->SetRelativePath(wstring(L"Sprite\\") + Buffer + L".sprite");
-		pSprite->Save(strContentPath + L"Sprite\\" + Buffer + L".sprite");
-
-		pSprite = Load<DSprite>(Buffer, wstring(L"Sprite\\") + Buffer + L".sprite");
-	}
-
-	Ptr<DFlipbook> pFlipbook = new DFlipbook;
-
-	for (int i = 0; i < nSprite; ++i)
-	{
-		wchar_t Buffer[50] = {};
-		swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
-		pFlipbook->AddSprite(FindAsset<DSprite>(Buffer));
-	}
-
-	AddAsset(L"Idle_Left", pFlipbook);
-	pFlipbook->Save(strContentPath + L"Flipbook\\" + L"Idle_Left" + L".flip");*/
-
-	// 여기 사용 안함
-	//Load<DFlipbook>(L"Player_Idle_Down", L"Flipbook\\Player_Idle_Down.flip");
-
-	// Test
-	/*Ptr<DFlipbook> pFlipbook = new DFlipbook;
-
-	for (int i = 1; i < 9; ++i)
-	{
-		wchar_t Buffer[50] = {};
-		swprintf_s(Buffer, 50, L"Idle_Left_%d", i);
-		pFlipbook->AddSprite(FindAsset<DSprite>(Buffer));
-	}
-
-	wstring strContentPath = DPathMgr::GetInst()->GetContentPath();
-
-	AddAsset(L"Idle_Left", pFlipbook);
-	pFlipbook->Save(strContentPath + L"Flipbook\\" + L"Idle_Left" + L".flip");*/
 }
 
 void DAssetMgr::CreateEngineGraphicShader()
@@ -373,6 +284,20 @@ void DAssetMgr::CreateEngineGraphicShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_POSTPROCESS);
 	AddAsset(L"EffectMergeShader", pShader);
 	//-----------------------------------------------------------------------------------------------------
+	// TileMapEditorShader
+	pShader = new DGraphicShader;
+	pShader->CreateVertexShader(L"Shader\\TE_EditorShader.hlsl", "VS_Std2D");
+	pShader->CreatePixelShader(L"Shader\\TE_EditorShader.hlsl", "PS_Std2D");
+
+	pShader->SetRSType(RS_TYPE::CULL_NONE);
+	pShader->SetDSType(DS_TYPE::LESS);
+	pShader->SetBSType(BS_TYPE::DEFAULT);
+
+	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
+
+	pShader->AddTexParam(TEX_0, "OutputTexture");
+
+	AddAsset(L"TE_EditorShader", pShader);
 }
 
 #include "DParticleTickCS.h"
@@ -457,5 +382,10 @@ void DAssetMgr::CreateEngineMaterial()
 	pMtrl = new DMaterial(true);
 	pMtrl->SetShader(FindAsset<DGraphicShader>(L"EffectMergeShader"));
 	AddAsset(L"EffectMergeMtrl", pMtrl);
+	//-----------------------------------------------------------------------------------------------------
+	// TE_EditorMtrl
+	pMtrl = new DMaterial(true);
+	pMtrl->SetShader(FindAsset<DGraphicShader>(L"TE_EditorShader"));
+	AddAsset(L"TE_EditorMtrl", pMtrl);
 	//-----------------------------------------------------------------------------------------------------
 }

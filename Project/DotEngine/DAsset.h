@@ -12,6 +12,7 @@ public:
 
     friend class DAssetMgr;
     friend class SE_SpriteView;
+    friend class TE_TileMapMod;
 
 public:
     CLONE_DISABLE(DAsset);

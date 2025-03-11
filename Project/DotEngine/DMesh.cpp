@@ -39,7 +39,7 @@ int DMesh::Create(tVtx* _VtxSysMem, UINT _VtxCount, UINT* _IdxSysMem, UINT _IdxC
 	m_VBDesc.ByteWidth = sizeof(tVtx) * m_VtxCount;
 	m_VBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-	// Vertex 버퍼가 생성된 이후에도 데이터 쓰기가 가능하도록 설정
+	// Enable data writing even after Vertex buffer is created
 	m_VBDesc.Usage = D3D11_USAGE_DEFAULT;
 	m_VBDesc.CPUAccessFlags = 0;
 
@@ -51,7 +51,7 @@ int DMesh::Create(tVtx* _VtxSysMem, UINT _VtxCount, UINT* _IdxSysMem, UINT _IdxC
 
 	if (FAILED(DEVICE->CreateBuffer(&m_VBDesc, &tSub, m_VB.GetAddressOf())))
 	{
-		MessageBox(nullptr, L"VertexBuffer 생성 실패", L"Mesh 생성 실패", MB_OK);
+		MessageBox(nullptr, L"VertexBuffer creation failed.(Mesh)", L"VertexBuffer creation failed.(Mesh)", MB_OK);
 		return E_FAIL;
 	}
 
@@ -59,7 +59,7 @@ int DMesh::Create(tVtx* _VtxSysMem, UINT _VtxCount, UINT* _IdxSysMem, UINT _IdxC
 	m_IBDesc.ByteWidth = sizeof(UINT) * m_IdxCount;
 	m_IBDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
-	// Index 버퍼가 생성된 이후에 데이터가 변경될 일이 없다.
+	// The data will not change after the Index buffer is created
 	m_IBDesc.Usage = D3D11_USAGE_DEFAULT;
 	m_IBDesc.CPUAccessFlags = 0;
 
@@ -70,7 +70,7 @@ int DMesh::Create(tVtx* _VtxSysMem, UINT _VtxCount, UINT* _IdxSysMem, UINT _IdxC
 
 	if (FAILED(DEVICE->CreateBuffer(&m_IBDesc, &tSub, m_IB.GetAddressOf())))
 	{
-		MessageBox(nullptr, L"IndexBuffer 생성 실패", L"Mesh 생성 실패", MB_OK);
+		MessageBox(nullptr, L"IndexBuffer creation failed.(Mesh)", L"IndexBuffer creation failed.(Mesh)", MB_OK);
 		return E_FAIL;
 	}
 

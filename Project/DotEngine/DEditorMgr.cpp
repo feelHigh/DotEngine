@@ -54,7 +54,7 @@ void DEditorMgr::Init()
     InitImGui();
 
 
-    // Content 폴더를 감시하는 커널 오브젝트 생성
+    // Create a kernel object to monitor the Content folder
     wstring ContentPath = DPathMgr::GetInst()->GetContentPath();
     m_hNotifyHandle = FindFirstChangeNotification(ContentPath.c_str(), true
                                                 , FILE_NOTIFY_CHANGE_FILE_NAME | FILE_NOTIFY_CHANGE_DIR_NAME

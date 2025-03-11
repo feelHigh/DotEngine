@@ -32,22 +32,22 @@ public:
     void SetParticleTexture(Ptr<DTexture> _Texture) { m_ParticleTex = _Texture; }
 
 public:
-    virtual void SaveToFile(FILE* _File) override;   // 파일에 컴포넌트의 정보를 저장
-    virtual void LoadFromFile(FILE* _File) override; // 파일에 컴포넌트의 정보를 로드
+    virtual void SaveToFile(FILE* _File) override;   // Save component information to a file
+    virtual void LoadFromFile(FILE* _File) override; // Load component information into a file
 
 private:
     Ptr<DParticleTickCS>    m_TickCS;
-    DStructuredBuffer* m_ParticleBuffer;       // 모든 파티클 정보
-    DStructuredBuffer* m_SpawnCountBuffer;     // 파티클 활성화 숫자 전달용 버퍼
-    DStructuredBuffer* m_ModuleBuffer;         // Module Data Buffer
+    DStructuredBuffer*      m_ParticleBuffer;       // All Particle Information
+    DStructuredBuffer*      m_SpawnCountBuffer;     // Buffer for Particle Activation Numbers Transfer
+    DStructuredBuffer*      m_ModuleBuffer;         // Module Data Buffer
 
     Ptr<DTexture>           m_ParticleTex;
-    float                   m_Time;                 // 누적시간    
-    float                   m_BurstTime;            // SpawnBurst 체크용 변수
+    float                   m_Time;                 // Accumulative time
+    float                   m_BurstTime;            // Variables for checking SpawnBurst
 
-    int                     m_MaxParticeCount;      // 파티클 최대 개수
+    int                     m_MaxParticeCount;      // Max particle count
 
-    tParticleModule         m_Module;               // 파티클의 기능 정의
+    tParticleModule         m_Module;               // Define particle functionality
 
 };
 

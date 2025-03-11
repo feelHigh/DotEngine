@@ -151,23 +151,23 @@ void DEditorMgr::InitImGui()
     float fontSize = 16.0f; // Choose your font size here
     io.Fonts->AddFontFromFileTTF(convertedFontPath.c_str(), fontSize);
 
-    // Editor(Tool) 용 UI 생성
+    // Create UI for Editor(Tool)
     CreateEditor();
 }
 
 void DEditorMgr::ObserveContent()
 {
-    // 지정된 상황이 발생했는지 확인
+    // Verify that the specified situation has occurred
     DWORD dwStatus = WaitForSingleObject(m_hNotifyHandle, 0);
 
-    // 컨텐츠 폴더에 변경점이 발생했다면,
+    // If a change has occurred in the content folder,
     if (dwStatus == WAIT_OBJECT_0)
     {
-        // Content 폴더에 있는 모든 에셋과 메모리에 로딩되어있는 에셋을 동기화
+        // Synchronize all the assets in the Content folder with the assets loaded into memory
         ContentDrawer* pContent = (ContentDrawer*)FindEditor("ContentDrawer");
         pContent->Reload();
 
-        // 다시 Content 폴더에 변경점이 발생하는지 확인하도록 함
+        // Check back to see if any changes occur in the Content folder
         FindNextChangeNotification(m_hNotifyHandle);
     }
 }
@@ -232,10 +232,10 @@ void DEditorMgr::CreateEditor()
     pUI->SetActive(false);
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
-    // TE_TileMapMod
-    pUI = new TE_TileMapMod;
+    // TE_TileSetView
+    pUI = new TE_TileSetView;
     pUI->Init();
-    pUI->SetName("TE_TileMapMod");
+    pUI->SetName("TE_TileSetView");
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
     // TE_TileMapView
@@ -244,10 +244,10 @@ void DEditorMgr::CreateEditor()
     pUI->SetName("TE_TileMapView");
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
-    // TE_TileSetView
-    pUI = new TE_TileSetView;
+    // TE_TileMapMod
+    pUI = new TE_TileMapMod;
     pUI->Init();
-    pUI->SetName("TE_TileSetView");
+    pUI->SetName("TE_TileMapMod");
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
 
     // TileMapEditor
@@ -256,6 +256,7 @@ void DEditorMgr::CreateEditor()
     pUI->SetName("TileMapEditor");
     pUI->SetActive(false);
     m_mapUI.insert(make_pair(pUI->GetName(), pUI));
+
 }
 
 void DEditorMgr::ImGuiProgress()

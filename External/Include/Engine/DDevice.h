@@ -1,9 +1,7 @@
 #pragma once
-// DirectX 관련 기능을 담당
-// GPU 제어
-class DConstantBuffer;
-
 #include "DTexture.h"
+
+class DConstantBuffer;
 
 class DDevice
 	: public DSingleton<DDevice>
@@ -38,8 +36,8 @@ private:
 	HWND							m_hWnd;
 	Vec2							m_vResolution;
 
-	ComPtr<ID3D11Device>			m_Device;	// Dx11 객체 생성, GPU 메모리 할당
-	ComPtr<ID3D11DeviceContext>		m_Context;	// Rendering, 
+	ComPtr<ID3D11Device>			m_Device;	// Dx11 object creation, GPU memory allocation
+	ComPtr<ID3D11DeviceContext>		m_Context;	// Rendering
 
 	ComPtr<IDXGISwapChain>			m_SwapChain;
 

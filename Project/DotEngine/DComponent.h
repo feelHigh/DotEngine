@@ -39,8 +39,8 @@ public:
     GET_OTHER_COMPONENT(ParticleSystem);
 
 public:
-    virtual void SaveToFile(FILE* _File) = 0;   // 파일에 컴포넌트의 정보를 저장
-    virtual void LoadFromFile(FILE* _File) = 0; // 파일에 컴포넌트의 정보를 로드
+    virtual void SaveToFile(FILE* _File) = 0;   // Save component information to a file
+    virtual void LoadFromFile(FILE* _File) = 0; // Load component information into a file
 
 private:
     void SetOwner(DGameObject* _Object) { m_Owner = _Object; }

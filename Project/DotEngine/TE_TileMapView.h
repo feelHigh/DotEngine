@@ -1,6 +1,12 @@
 #pragma once
 #include "TE_Sub.h"
 
+struct TileData
+{
+    Vec2 TileIndex;     // Index in the tileset (column, row)
+    bool IsOccupied;    // Whether the tile has data
+};
+
 class TE_TileMapView
     : public TE_Sub
 {
@@ -13,87 +19,42 @@ public:
     virtual void Update() override;
 
 public:
-    void SetTargetTile(Ptr<DTexture> _Tex, Vec2 _LeftTopPixel, Vec2 _Slice);
-    void SetGridSize(int rows, int columns);
+    void SetGridSize(int _rows, int _columns);
+    void ResetTileMap();
+    void ClearTileMap();
+
+    void PlaceTile(int _row, int _col, Vec2 _tileIndex);
+    void RemoveTile(int _row, int _col);
+    TileData* GetTileData() { return m_Grid.data(); }
+    int GetNumRows() { return m_NumRows; }
+    int GetNumColumns() { return m_NumColumns; }
+
+    // Get the width of a single tile
+    float GetTileWidth() const { return m_TileWidth; }
+
+    // Get the height of a single tile
+    float GetTileHeight() const { return m_TileHeight; }
+
+    // Set the size of tiles in the grid
+    void SetTileSize(float _width, float _height);
 
 private:
-    Ptr<DTexture> m_TileTex;          // Current tile texture
-    Vec2 m_TileLeftTopPixel;          // Top-left pixel of the selected tile
-    Vec2 m_TileSlice;                 // Width and height of the selected tile
+    void DrawTileMapGrid();
+    void HandleTilePlacement();
 
-    int m_TileWidth;                  // Width of each grid tile
-    int m_TileHeight;                 // Height of each grid tile
+private:
+    vector<TileData> m_Grid;   // Tile data for the entire grid
+    int m_NumRows;             // Number of rows in the tile map
+    int m_NumColumns;          // Number of columns in the tile map
 
-    int m_NumRows;                    // Number of rows in the grid
-    int m_NumColumns;                 // Number of columns in the grid
+    float m_TileWidth;         // Width of a single tile
+    float m_TileHeight;        // Height of a single tile
 
-    float m_ZoomScale;                // Zoom factor
-    ImVec2 m_CanvasScroll;            // Panning offset
+    float m_ZoomScale;         // Zoom scale for the tile map view
+    Vec2 m_CanvasScroll;       // Scroll position for panning
+    bool m_RightClickDragging; // Flag for right-click dragging to pan
+    Vec2 m_LastMousePos;       // Last mouse position for tracking drag
 
-    std::vector<std::vector<ImVec2>> m_Grid; // Grid data
+    bool m_EraserMode;         // Flag for eraser mode
+
 };
-
-inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs);
-inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs);
-inline ImVec2 operator*(const ImVec2& lhs, float scalar);
-inline ImVec2 operator/(const ImVec2& lhs, float scalar);
-inline ImVec2& operator+=(ImVec2& lhs, const ImVec2& rhs);
-inline ImVec2& operator-=(ImVec2& lhs, const ImVec2& rhs);
-inline ImVec2& operator*=(ImVec2& lhs, float scalar);
-inline ImVec2& operator/=(ImVec2& lhs, float scalar);
-
-// Addition
-inline ImVec2 operator+(const ImVec2& lhs, const ImVec2& rhs)
-{
-    return ImVec2(lhs.x + rhs.x, lhs.y + rhs.y);
-}
-
-// Subtraction
-inline ImVec2 operator-(const ImVec2& lhs, const ImVec2& rhs)
-{
-    return ImVec2(lhs.x - rhs.x, lhs.y - rhs.y);
-}
-
-// Multiplication by scalar
-inline ImVec2 operator*(const ImVec2& lhs, float scalar)
-{
-    return ImVec2(lhs.x * scalar, lhs.y * scalar);
-}
-
-// Division by scalar
-inline ImVec2 operator/(const ImVec2& lhs, float scalar)
-{
-    return ImVec2(lhs.x / scalar, lhs.y / scalar);
-}
-
-// Compound addition
-inline ImVec2& operator+=(ImVec2& lhs, const ImVec2& rhs)
-{
-    lhs.x += rhs.x;
-    lhs.y += rhs.y;
-    return lhs;
-}
-
-// Compound subtraction
-inline ImVec2& operator-=(ImVec2& lhs, const ImVec2& rhs)
-{
-    lhs.x -= rhs.x;
-    lhs.y -= rhs.y;
-    return lhs;
-}
-
-// Compound multiplication by scalar
-inline ImVec2& operator*=(ImVec2& lhs, float scalar)
-{
-    lhs.x *= scalar;
-    lhs.y *= scalar;
-    return lhs;
-}
-
-// Compound division by scalar
-inline ImVec2& operator/=(ImVec2& lhs, float scalar)
-{
-    lhs.x /= scalar;
-    lhs.y /= scalar;
-    return lhs;
-}

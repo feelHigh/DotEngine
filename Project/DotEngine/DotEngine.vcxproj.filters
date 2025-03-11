@@ -886,6 +886,9 @@
     <FxCompile Include="Debug.hlsl">
       <Filter>Shader Code\02. Render</Filter>
     </FxCompile>
+    <FxCompile Include="TE_EditorShader.hlsl">
+      <Filter>Shader Code\02. Render</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Func.hlsli">

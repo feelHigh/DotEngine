@@ -12,7 +12,7 @@ void DGameObjectEx::FinalTick()
 			GetComponent((COMPONENT_TYPE)i)->FinalTick();
 	}
 
-	// 자식 오브젝트
+	// Child object
 	vector<DGameObject*>::const_iterator iter = GetChildren().begin();
 	for (; iter != GetChildren().end(); ++iter)
 	{

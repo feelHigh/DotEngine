@@ -29,19 +29,19 @@ struct tTask
 
 struct tLight
 {
-	Vec4	Color;		// 빛의 색상
-	Vec4	Ambient;	// 환경광	
+	Vec4	Color;		// Color of the light source
+	Vec4	Ambient;	// Environment light
 };
 
 struct tLightInfo
 {
-	tLight		LightEssence;	// 광원 색상정보
-	Vec3		WorldPos;		// 광원 위치
-	Vec3		WorldDir;		// 광윈이 진행하는 방향
-	float		Radius;			// 광원의 반경
-	float		Angle;			// 광원 범위 각도
-	LIGHT_TYPE	Type;			// 광원 종류
-	int			padding[3];		// 패딩
+	tLight		LightEssence;	// Color information
+	Vec3		WorldPos;		// Location
+	Vec3		WorldDir;		// Direction
+	float		Radius;			// Radius
+	float		Angle;			// Range angle
+	LIGHT_TYPE	Type;			// Type
+	int			padding[3];		// Padding
 };
 
 struct tPixel
@@ -62,11 +62,11 @@ struct tParticle
 	Vec3	vWorldCurrentScale;
 	Vec3	vWorldRotation;
 
-	Vec3	vForce;				// Particle 에 누적된 힘
+	Vec3	vForce;				// Stacked force
 	Vec3	vVelocity;
 
-	float	NoiseForceAccTime;	// Noise Force 텀에 도달하는 누적 시간
-	Vec3	NoiseForceDir;		// Noise Force 의 방향
+	float	NoiseForceAccTime;	// Accumulated time to reach the Noise Force Term
+	Vec3	NoiseForceDir;		// Direction
 
 	float	Mass;
 	float	Life;

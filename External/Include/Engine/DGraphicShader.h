@@ -66,7 +66,7 @@ private:
     DS_TYPE                         m_DSType;
     BS_TYPE                         m_BSType;
 
-    SHADER_DOMAIN                   m_Domain;   // ½¦ÀÌ´õÀÇ ·»´õ¸µ ¹æ½Ä
+    SHADER_DOMAIN                   m_Domain;   // Type of rendering for shader
 
     // Shader Parameter
     vector<tScalarParam>            m_ScalarParam;

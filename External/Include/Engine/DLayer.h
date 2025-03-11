@@ -31,8 +31,8 @@ public:
     void DeregisterObject(DGameObject* _Object);
 
 private:
-    vector<DGameObject*>    m_Parents; // 해당 레이어 소속 오브젝트중에서 최상위 부모오브젝트만 관리
-    vector<DGameObject*>    m_Objects; // 해당 레이어 소속 오브젝트 중에서 부모 자식 상관없는 모든 오브젝트
+    vector<DGameObject*>    m_Parents; // Manage only top parent objects among objects belonging to that layer
+    vector<DGameObject*>    m_Objects; // All objects belonging to the corresponding layer that are irrelevant to the parent or child
     const int               m_LayerIdx;
 
 };

@@ -24,25 +24,25 @@ void DLevelSaveLoad::SaveLevel(const wstring& _FilePath, DLevel* _Level)
 	FILE* File = nullptr;
 	_wfopen_s(&File, _FilePath.c_str(), L"wb");
 
-	// Level 이름 저장
+	// Save Level Name
 	SaveWString(_Level->GetName(), File);
 
-	// Level 안에 있는 Layer 를 저장
+	// Save Layer in Level
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
 		DLayer* pLayer = _Level->GetLayer(i);
 
-		// Layer 이름 저장
+		// Save Layer Name
 		SaveWString(pLayer->GetName(), File);
 
-		// Layer 안에 있는 GameObject 를 저장
+		// Save GameObject in Layer
 		const vector<DGameObject*>& vecParents = pLayer->GetParentObjects();
 
-		// Layer 가 보유한 ParentObject 개수 저장
+		// Save the number of ParentObjects held by Layer
 		size_t count = vecParents.size();
 		fwrite(&count, sizeof(size_t), 1, File);
 
-		// GameObject 저장
+		// Save GameObject
 		for (size_t i = 0; i < vecParents.size(); ++i)
 		{
 			SaveGameObject(File, vecParents[i]);
@@ -54,10 +54,10 @@ void DLevelSaveLoad::SaveLevel(const wstring& _FilePath, DLevel* _Level)
 
 void DLevelSaveLoad::SaveGameObject(FILE* _File, DGameObject* _Object)
 {
-	// GameObject 의 이름 저장
+	// Save GameObject Name
 	SaveWString(_Object->GetName(), _File);
 
-	// Component 정보 저장
+	// Save Component Information
 	UINT i = 0;
 	for (; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
@@ -66,33 +66,33 @@ void DLevelSaveLoad::SaveGameObject(FILE* _File, DGameObject* _Object)
 		if (nullptr == pComponent)
 			continue;
 
-		// ComponentType 을 저장
+		// Save ComponentType
 		COMPONENT_TYPE Type = pComponent->GetComponentType();
 		fwrite(&Type, sizeof(COMPONENT_TYPE), 1, _File);
 
 		pComponent->SaveToFile(_File);
 	}
 
-	// COMPONENT_TYPE::END 저장
+	// COMPONENT_TYPE::END
 	fwrite(&i, sizeof(COMPONENT_TYPE), 1, _File);
 
-	// Script 정보 저장
-	// Script 개수 저장
+	// Save Script Information
+	// Save Script count
 	const vector<DScript*> vecScripts = _Object->GetScripts();
 	size_t ScriptCount = vecScripts.size();
 	fwrite(&ScriptCount, sizeof(size_t), 1, _File);
 
 	for (size_t i = 0; i < ScriptCount; ++i)
 	{
-		// Script 의 이름 저장
+		// Save Script Name
 		wstring ScriptName = DScriptMgr::GetScriptName(vecScripts[i]);
 		SaveWString(ScriptName, _File);
 
-		// Script 정보 저장
+		// Save Script Information
 		vecScripts[i]->SaveToFile(_File);
 	}
 
-	// Child 정보 저장
+	// Save Child Information
 	const vector<DGameObject*>& vecChild = _Object->GetChildren();
 	size_t ChildCount = vecChild.size();
 	fwrite(&ChildCount, sizeof(size_t), 1, _File);
@@ -108,29 +108,29 @@ DLevel* DLevelSaveLoad::LoadLevel(const wstring& _FilePath)
 	FILE* File = nullptr;
 	_wfopen_s(&File, _FilePath.c_str(), L"rb");
 
-	// Level 생성
+	// Create Level
 	DLevel* pNewLevel = new DLevel;
 
-	// Level 이름 불러오기
+	// Import Level Name
 	wstring LevelName;
 	LoadWString(LevelName, File);
 	pNewLevel->SetName(LevelName);
 
-	// Level 안에 있는 Layer 정보 불러오기
+	// Import Layer information within Level
 	for (UINT i = 0; i < MAX_LAYER; ++i)
 	{
 		DLayer* pLayer = pNewLevel->GetLayer(i);
 
-		// Layer 이름 불러오기
+		// Import Layer
 		wstring LayerName;
 		LoadWString(LayerName, File);
 		pLayer->SetName(LayerName);
 
-		// Layer 가 보유한 ParentObject 개수 불어오기
+		// Import the number of ParentObjects held by Layer
 		size_t count = 0;
 		fread(&count, sizeof(size_t), 1, File);
 
-		// GameObject 불러와서 Layer 에 집어넣기
+		// Call GameObject and add to Layer
 		for (size_t i = 0; i < count; ++i)
 		{
 			DGameObject* pLoadedObject = LoadGameObject(File);
@@ -147,50 +147,50 @@ DGameObject* DLevelSaveLoad::LoadGameObject(FILE* _File)
 {
 	DGameObject* pObject = new DGameObject;
 
-	// GameObject 의 이름 로드
+	// Load GameObject Name
 	wstring Name;
 	LoadWString(Name, _File);
 	pObject->SetName(Name);
 
-	// Component 정보 로드	
+	// Load Component Information	
 	COMPONENT_TYPE Type = COMPONENT_TYPE::END;
 	while (true)
 	{
-		// 저장되어있는 정보가 어떤 컴포넌트인지 확인
+		// Determine which component the stored information is
 		fread(&Type, sizeof(COMPONENT_TYPE), 1, _File);
 
-		// 읽은 타입 정보가 END 인 경우, 저장된 컴포넌트 정보의 끝이다.
+		// If the read type information is END, it is the end of the stored component information
 		if (COMPONENT_TYPE::END == Type)
 			break;
 
-		// 저장된 타입에 맞는 컴포넌트를 생성 시키고, 저장할때랑 동일한 순서로 데이터를 읽는다.
+		// Create components that fit the stored type and read the data in the same order as when storing them
 		DComponent* pComponent = GetComponent(Type);
 
-		// 생성된 컴포넌트를 오브젝트에 넣어준다.
+		// Put the created component into the object
 		pObject->AddComponent(pComponent);
 
-		// 저장당시의 정보를 읽어와서 복수한다.
+		// Read and copy the information at the time of storage
 		pComponent->LoadFromFile(_File);
 	}
 
-	// Script 정보 로드	
+	// Load Script Information
 	size_t ScriptCount = 0;
 	fread(&ScriptCount, sizeof(size_t), 1, _File);
 
 	for (size_t i = 0; i < ScriptCount; ++i)
 	{
-		// Script 의 이름 읽기
+		// Read Script name
 		wstring ScriptName;
 		LoadWString(ScriptName, _File);
 
-		// 읽은 Script 이름으로 이름에 해당하는 Script 생성
+		// Create script corresponding to the name
 		DScript* pScript = DScriptMgr::GetScript(ScriptName);
 		pScript->LoadFromFile(_File);
 
 		pObject->AddComponent(pScript);
 	}
 
-	// Child 정보 로드
+	// Load Child Information
 	size_t ChildCount = 0;
 	fread(&ChildCount, sizeof(size_t), 1, _File);
 

@@ -24,7 +24,7 @@ public:
     Ptr<DMaterial> GetMaterial() { return m_Mtrl; }
     Ptr<DMaterial> GetSharedMtrl();
 
-    // 동적재질 생성 및 반환
+    // Creating and returning dynamic materials
     Ptr<DMaterial> GetDynamicMaterial();
 
 protected:
@@ -34,9 +34,9 @@ protected:
 private:
     Ptr<DMesh>          m_Mesh;
 
-    Ptr<DMaterial>      m_Mtrl;         // 현재 사용중인 재질
-    Ptr<DMaterial>      m_SharedMtrl;   // 공유 재질(마스터)
-    Ptr<DMaterial>      m_DynamicMtrl;  // 임시 재질
+    Ptr<DMaterial>      m_Mtrl;         // Material currently in use
+    Ptr<DMaterial>      m_SharedMtrl;   // Shared Material (Master)
+    Ptr<DMaterial>      m_DynamicMtrl;  // Temporary Material
 
 };
 

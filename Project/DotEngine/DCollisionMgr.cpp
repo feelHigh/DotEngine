@@ -61,12 +61,12 @@ void DCollisionMgr::CollisionCheck(UINT Layer1, UINT Layer2)
 
 void DCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 {
-	// 현재 레벨 가져온다.
+	// Get information of the current level
 	DLevel* pCurLevel = DLevelMgr::GetInst()->GetCurrentLevel();
 	if (nullptr == pCurLevel)
 		return;
 
-	// 각 레이어에 속한 모든 오브젝트들을 가져온다.
+	// Import all objects belonging to each layer
 	const vector<DGameObject*>& vecLeft = pCurLevel->GetLayer(_Left)->GetObjects();
 	const vector<DGameObject*>& vecRight = pCurLevel->GetLayer(_Right)->GetObjects();
 
@@ -89,7 +89,7 @@ void DCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 
 			map<ULONGLONG, bool>::iterator iter = m_mapCollisionInfo.find(id.ID);
 
-			// 등록된적이 없으면 등록시킨다.
+			// If it has never been registered, register it
 			if (iter == m_mapCollisionInfo.end())
 			{
 				m_mapCollisionInfo.insert(make_pair(id.ID, false));
@@ -99,17 +99,17 @@ void DCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 			bool bDead = pLeftCol->GetOwner()->IsDead() || pRightCol->GetOwner()->IsDead();
 			//bool bDeactive = !vecLeft[i]->IsActive() || !vecRight[j]->IsActive();
 
-			// 두 충돌체가 지금 충돌중이다.
+			// The two colliders are now colliding.
 			if (IsCollision(pLeftCol, pRightCol))
 			{
-				// 이전에도 충돌중이었다.
+				// Was during colliding
 				if (iter->second)
 				{
 					pLeftCol->Overlap(pRightCol);
 					pRightCol->Overlap(pLeftCol);
 				}
 
-				// 이전에는 충돌중이 아니었다.
+				// Was not colliding
 				else
 				{
 					pLeftCol->BeginOverlap(pRightCol);
@@ -118,9 +118,9 @@ void DCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 
 				iter->second = true;
 
-				// 두 충돌체중 하나라도 Dead 상태거나 비활성화 상태라면
-				// 추가로 충돌 해제를 호출시켜준다.
-				if (bDead)//|| bDeactive)
+				// If either of the collisions is dead or disabled
+				// Additionally, call the release of the collision.
+				if (bDead)
 				{
 					pLeftCol->EndOverlap(pRightCol);
 					pRightCol->EndOverlap(pLeftCol);
@@ -128,10 +128,10 @@ void DCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 				}
 			}
 
-			// 두 충돌체가 지금 충돌중이 아니다.
+			// The two colliders are not colliding right now.
 			else
 			{
-				// 이전에는 충돌중이었다.
+				// Was during colliding
 				if (iter->second)
 				{
 					pLeftCol->EndOverlap(pRightCol);
@@ -146,17 +146,17 @@ void DCollisionMgr::CollisionBtwLayer(UINT _Left, UINT _Right)
 
 bool DCollisionMgr::IsCollision(DCollider2D* _Left, DCollider2D* _Right)
 {
-	// 충돌체의 기본 원형 도형을 가져온다.
+	// Gets the basic circular shape of the collider.
 	Ptr<DMesh> pRectMesh = DAssetMgr::GetInst()->FindAsset<DMesh>(L"RectMesh");
 	tVtx* pVtx = (tVtx*)pRectMesh->GetVtxSysMem();
 
-	// 각 충돌체의 월드 행렬을 가져온다.
+	// Gets the world matrix of each collider
 	const Matrix& matLeft = _Left->GetWorldMat();
 	const Matrix& matRight = _Right->GetWorldMat();
 
-	// 기본 도형(Rect) 를 각 충돌체의 월드행렬을 곱해서, 충돌체의 각 모서리 위치로 옮긴 후,
-	// 좌표끼리 위치값을 빼서 충돌체의 월드상에서의 위치에서 도형의 표면 방향벡터를 구한다.
-	// 이 벡터는 충돌체들을 투영시킬 축이 될 예정
+	// After multiplying the basic figure (Rect) by the world matrix of each collision object, move it to the position of each corner of the collision object,
+	// By subtracting the position values between the coordinates, the surface direction vector of the figure is obtained at the position on the world of the collision body.
+	// This vector will be the axis on which the colliders will be projected
 	Vec3 vProjAxis[4] = {};
 
 	vProjAxis[0] = XMVector3TransformCoord(pVtx[3].vPos, matLeft) - XMVector3TransformCoord(pVtx[0].vPos, matLeft);
@@ -165,10 +165,10 @@ bool DCollisionMgr::IsCollision(DCollider2D* _Left, DCollider2D* _Right)
 	vProjAxis[2] = XMVector3TransformCoord(pVtx[3].vPos, matRight) - XMVector3TransformCoord(pVtx[0].vPos, matRight);
 	vProjAxis[3] = XMVector3TransformCoord(pVtx[1].vPos, matRight) - XMVector3TransformCoord(pVtx[0].vPos, matRight);
 
-	// 충돌체의 중심을 잇는 벡터
+	// Vector connecting the center of a collision object
 	Vec3 vCenter = XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), matLeft) - XMVector3TransformCoord(Vec3(0.f, 0.f, 0.f), matRight);
 
-	// 투영
+	// Projection
 	for (int i = 0; i < 4; ++i)
 	{
 		Vec3 vProj = vProjAxis[i];

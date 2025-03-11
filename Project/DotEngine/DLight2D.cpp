@@ -22,7 +22,7 @@ void DLight2D::FinalTick()
 	m_Info.WorldPos = Transform()->GetWorldPos();
 	m_Info.WorldDir = Transform()->GetWorldDir(DIR::RIGHT);
 
-	// 자신을 RenderMgr 에 등록시킴
+	//Register to RenderMgr
 	DRenderMgr::GetInst()->RegisterLight2D(this);
 }
 

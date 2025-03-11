@@ -411,6 +411,7 @@ call EngineCopy.bat</Command>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
     </FxCompile>
+    <FxCompile Include="TE_EditorShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Func.hlsli" />

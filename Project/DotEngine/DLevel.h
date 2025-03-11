@@ -16,7 +16,7 @@ public:
     ~DLevel();
 
 public:
-    void Begin();   // 레벨이 시작되는 순간 or 레벨에 추가(합류) 하는 순간
+    void Begin();       // The moment the level starts or the moment you add (join) the level
     void Tick();
     void FinalTick();
 

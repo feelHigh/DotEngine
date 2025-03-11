@@ -31,14 +31,14 @@ public:
     virtual void LoadFromFile(FILE* _File) override;
 
 private:
-    vector<Ptr<DFlipbook>>  m_vecFlipbook;  // FliBook 컴포넌트가 보유한 모든 Flipbook 목록
-    Ptr<DFlipbook>          m_CurFlipbook;  // 현재 재생중인 Flipbook
-    Ptr<DSprite>            m_CurFrmSprite; // 현재 재생중인 Flipbook 에서 현재 프레임 인덱스에 해당하는 스프라이트
-    int                     m_CurFrmIdx;    // 현재 재생중인 Flipbook 에서 몇번째 Sprite 가 재생중인지 인덱스 기록
-    float                   m_FPS;          // 현재 재생중인 Flipbook 의 초당 프레임 진행 수
-    float                   m_AccTime;      // 누적 시간값 체크
+    vector<Ptr<DFlipbook>>  m_vecFlipbook;  // List of all Flipbooks held by Flipbook components
+    Ptr<DFlipbook>          m_CurFlipbook;  // Flipbook currently playing
+    Ptr<DSprite>            m_CurFrmSprite; // Sprite corresponding to the current frame index in the Flipbook that is currently playing
+    int                     m_CurFrmIdx;    // Indexing how many Sprites are playing in Flipbook that is currently playing
+    float                   m_FPS;          // Frame progress per second for Flipbook currently playing
+    float                   m_AccTime;      // Check cumulative time values
     bool                    m_Repeat;
-    bool                    m_Finish;       // Flipbook 재생이 끝에 도달했는지 여부
+    bool                    m_Finish;       // Whether Flipbook playback has reached its end
 
 };
 

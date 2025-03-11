@@ -51,7 +51,7 @@ Ptr<DMaterial> DRenderComponent::GetSharedMtrl()
 
 Ptr<DMaterial> DRenderComponent::GetDynamicMaterial()
 {
-	// 동적재질 생성 및 반환은 게임(레벨) 이 Play 모드인 경우에만 호출이 되어야 한다.
+	// Dynamic material generation and return should only be called if the game (level) is in Play mode.
 	assert(DLevelMgr::GetInst()->GetCurrentLevel()->GetState() == LEVEL_STATE::PLAY);
 
 	if (nullptr != m_DynamicMtrl)

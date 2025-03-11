@@ -20,18 +20,18 @@ public:
 	UINT GetFPS() { return m_FPS; }
 
 private:
-	// LARGE_INTEGER - 8 바이트 정수 대용
+	// LARGE_INTEGER - 8 byte integer substitute
 	LARGE_INTEGER	m_llCurCount;
 	LARGE_INTEGER	m_llPrevCount;
 	LARGE_INTEGER	m_llFrequency;
 
 	UINT			m_FPS;
 
-	float			m_DeltaTime;	// 프레임 간격 시간( 1 프레임 실행하는데 걸리는 시간 )
-	float			m_Time;			// 프로그램이 켜진 이후로 진행된 시간
+	float			m_DeltaTime;	// Frame interval time (time taken to execute 1 frame)
+	float			m_Time;			// Time since the program has been turned on
 
-	float			m_E_DeltaTime;	// 프레임 간격 시간( 1 프레임 실행하는데 걸리는 시간 )
-	float			m_E_Time;			// 프로그램이 켜진 이후로 진행된 시간
+	float			m_E_DeltaTime;
+	float			m_E_Time;
 
 	wchar_t			m_TimeInfo[255];
 

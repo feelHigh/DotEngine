@@ -65,7 +65,7 @@ private:
 template<typename T>
 Ptr<T> DAssetMgr::Load(const wstring& _Key, const wstring& _RelativePath)
 {
-	// 동일 키값 에셋이 있는지 확인
+	// Verify that the same key value asset exists
 	Ptr<T> Asset = FindAsset<T>(_Key);
 
 	if (nullptr != Asset)
@@ -73,31 +73,31 @@ Ptr<T> DAssetMgr::Load(const wstring& _Key, const wstring& _RelativePath)
 		return Asset;
 	}
 
-	// 동일 키값의 에셋이 없었으면
+	// If you didn't have the same key value asset
 	wstring strFilePath = DPathMgr::GetInst()->GetContentPath();
 	strFilePath += _RelativePath;
 
 	Asset = new T;
 
-	// 로딩 실패 시 예외처리
+	// Handling exceptions in case of loading failure
 	if (FAILED(Asset->Load(strFilePath)))
 	{
-		MessageBox(nullptr, L"에셋 로딩 실패", L"로딩 실패", MB_OK);
+		MessageBox(nullptr, L"Failed loading asset.(DAssetMgr)", L"Failed loading asset.(DAssetMgr)", MB_OK);
 		return nullptr;
 	}
 
-	// Asset 이 자신의 키값과 경로를 알게 함
+	// Let Asset know its key value and path
 	Asset->m_Key = _Key;
 	Asset->m_RelativePath = _RelativePath;
 
-	// 맵에 등록
+	// Register for a map
 	ASSET_TYPE type = GetAssetType<T>();
 	m_mapAsset[(UINT)type].insert(make_pair(_Key, Asset.Get()));
 
-	// Asset 변경 알림	
+	// Asset Change Notification
 	DTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
 
-	// 로딩된 에셋 주소 반환
+	// Return loaded asset address
 	return Asset;
 }
 
@@ -127,11 +127,11 @@ void DAssetMgr::AddAsset(const wstring& _Key, Ptr<T> _Asset)
 	_Asset->SetKey(_Key);
 	m_mapAsset[(UINT)Type].insert(make_pair(_Key, _Asset.Get()));
 
-	// Asset 변경 알림	
+	// Asset Change Notification
 	DTaskMgr::GetInst()->AddTask(tTask{ ASSET_CHANGED });
 }
 
-// File 에 Asset 참조정보 저장 불러오기
+// Importing asset references to a file
 template<typename T>
 void SaveAssetRef(Ptr<T> Asset, FILE* _File)
 {

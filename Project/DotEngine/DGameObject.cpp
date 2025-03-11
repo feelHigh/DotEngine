@@ -20,7 +20,7 @@ DGameObject::DGameObject()
 	: m_arrCom{}
 	, m_RenderCom(nullptr)
 	, m_Parent(nullptr)
-	, m_LayerIdx(-1) // 어느 레이어 소속도 아니다(레벨안에 있지 않은 상태)
+	, m_LayerIdx(-1) // Not belonging to any layer (not in level)
 	, m_Dead(false)
 {
 }
@@ -33,7 +33,7 @@ DGameObject::DGameObject(const DGameObject& _Origin)
 	, m_LayerIdx(-1)
 	, m_Dead(false)
 {
-	// 컴포넌트 복사
+	// Copy Components
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
 		if (nullptr == _Origin.m_arrCom[i])
@@ -46,13 +46,13 @@ DGameObject::DGameObject(const DGameObject& _Origin)
 		pClonedCom->Init();
 	}
 
-	// Script 복사
+	// Copy Script
 	for (size_t i = 0; i < _Origin.m_vecScript.size(); ++i)
 	{
 		AddComponent(_Origin.m_vecScript[i]->Clone());
 	}
 
-	// 자식 오브젝트 복사
+	// Copy child object
 	for (size_t i = 0; i < _Origin.m_vecChildren.size(); ++i)
 	{
 		AddChild(_Origin.m_vecChildren[i]->Clone());
@@ -95,19 +95,19 @@ void DGameObject::AddComponent(DComponent* _Comopnent)
 
 void DGameObject::AddChild(DGameObject* _ChildObject)
 {
-	// 부모 오브젝트는 Level 에 속해있고, AddChild 되는 자식 오브젝트는 레벨에 소속되지 않은 경우
+	// If the parent object belongs to a Level and the child object to be added does not belong to a Level
 	if (-1 != m_LayerIdx && -1 == _ChildObject->m_LayerIdx)
 	{
 		assert(nullptr);
 	}
 
-	// 자식으로 들어오는 오브젝트가 이미 부모가 있는 경우
+	// The object entering the child already has a parent
 	if (_ChildObject->GetParent())
 	{
 		_ChildObject->DeregisterChild();
 	}
 
-	// 자식으로 들어오는 오브젝트가 최상위 부모 오브젝트인 경우
+	// The object entering the child is the parent object at the top
 	else
 	{
 		if (-1 != _ChildObject->m_LayerIdx)
@@ -188,7 +188,7 @@ void DGameObject::Begin()
 		m_vecScript[i]->Begin();
 	}
 
-	// 자식 오브젝트
+	// Child Object
 	for (size_t i = 0; i < m_vecChildren.size(); ++i)
 	{
 		m_vecChildren[i]->Begin();
@@ -208,7 +208,7 @@ void DGameObject::Tick()
 		m_vecScript[i]->Tick();
 	}
 
-	// 자식 오브젝트
+	// Child Object
 	for (size_t i = 0; i < m_vecChildren.size(); ++i)
 	{
 		m_vecChildren[i]->Tick();
@@ -223,13 +223,13 @@ void DGameObject::FinalTick()
 			m_arrCom[i]->FinalTick();
 	}
 
-	// 레이어 등록
+	// Register Layer
 	assert(-1 != m_LayerIdx);
 	DLevel* pLevel = DLevelMgr::GetInst()->GetCurrentLevel();
 	DLayer* pLayer = pLevel->GetLayer(m_LayerIdx);
 	pLayer->RegisterGameObject(this);
 
-	// 자식 오브젝트
+	// Child Object
 	vector<DGameObject*>::iterator iter = m_vecChildren.begin();
 	for (; iter != m_vecChildren.end(); )
 	{

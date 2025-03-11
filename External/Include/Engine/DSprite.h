@@ -32,8 +32,8 @@ public:
 
 private:
     Ptr<DTexture>   m_Atlas;
-    Vec2            m_LeftTopUV;      // UV ÁÂÇ¥°è
-    Vec2            m_SliceUV;        // UV ÁÂÇ¥°è
+    Vec2            m_LeftTopUV;      // UV coordinates
+    Vec2            m_SliceUV;        // UV coordinates
     Vec2            m_BackgroundUV;
     Vec2            m_OffsetUV;
 

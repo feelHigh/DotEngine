@@ -30,7 +30,7 @@ void DCollider2D::FinalTick()
 	Matrix matTranslation = XMMatrixTranslation(m_Offset.x, m_Offset.y, m_Offset.z);
 	Matrix matScale = XMMatrixScaling(m_Scale.x, m_Scale.y, m_Scale.z);
 
-	// 크기, 회전, 이동
+	// Position, Size, Rotation
 	Matrix matObjectScaleInv = XMMatrixIdentity();
 
 	if (m_IndependentScale)
@@ -42,7 +42,7 @@ void DCollider2D::FinalTick()
 
 	m_matColWorld = matScale * matTranslation * matObjectScaleInv * GetOwner()->Transform()->GetWorldMat();
 
-	// Debug 렌더링으로 충돌체의 위치를 표시
+	// Debug rendering to show the location of the collision object
 	if (m_OverlapCount)
 		DrawDebugRect(m_matColWorld, Vec4(1.f, 0.f, 0.f, 1.f), 0.f, false);
 	else

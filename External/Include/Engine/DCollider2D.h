@@ -38,11 +38,11 @@ public:
 
 private:
     Vec3    m_Offset;
-    Vec3    m_Scale;    // 배율 or 절대 크기
-    Matrix  m_matColWorld;  // 충돌체의 최종 월드 상태
+    Vec3    m_Scale;
+    Matrix  m_matColWorld;      // Final world state of the collider
     int     m_OverlapCount;
 
-    bool    m_IndependentScale; // 오브젝트의 크기에 영향을 받을지 여부
+    bool    m_IndependentScale;
 
 };
 

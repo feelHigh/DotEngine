@@ -100,10 +100,10 @@ int DMaterial::Save(const wstring& _RelativePath)
 	if (nullptr == File)
 		return E_FAIL;
 
-	// 어떤 쉐이더를 참조했는지
+	// Which shader it referenced
 	SaveAssetRef(m_Shader, File);
 
-	// 상수 데이터
+	// Constant data
 	fwrite(&m_Const, sizeof(tMtrlConst), 1, File);
 
 	for (UINT i = 0; i < TEX_PARAM::END; ++i)
@@ -124,10 +124,10 @@ int DMaterial::Load(const wstring& _FilePath)
 	if (nullptr == File)
 		return E_FAIL;
 
-	// 어떤 쉐이더를 참조했는지
+	// Which shader it referenced
 	LoadAssetRef(m_Shader, File);
 
-	// 상수 데이터
+	// Constant data
 	fread(&m_Const, sizeof(tMtrlConst), 1, File);
 
 	for (UINT i = 0; i < TEX_PARAM::END; ++i)

@@ -1,9 +1,7 @@
 #include "pch.h"
 
-
 tTransform g_Trans = {};
 tGlobalData g_GlobalData = {};
-
 
 const char* ASSET_TYPE_STRING[] =
 {
@@ -19,7 +17,6 @@ const char* ASSET_TYPE_STRING[] =
 };
 
 const char* ToString(ASSET_TYPE _Type) { return ASSET_TYPE_STRING[(UINT)_Type]; }
-
 
 const char* COMPONENT_TYPE_STRING[] =
 {

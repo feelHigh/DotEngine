@@ -4,8 +4,8 @@
 #include "TileMapEditor.h"
 #include "DAssetMgr.h"
 
-class TE_Sub :
-    public DEditor
+class TE_Sub
+    : public DEditor
 {
 public:
     friend class TileMapEditor;

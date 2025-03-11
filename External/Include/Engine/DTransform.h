@@ -54,8 +54,8 @@ private:
     Vec3    m_RelativeDir[3];
     Vec3    m_WorldDir[3];
 
-    Matrix  m_matWorld;         // 이동, 크기, 회전
-    bool    m_IndependentScale; // 부모의 크기에 영향받지 않음
+    Matrix  m_matWorld;         // Position, Size, Rotation
+    bool    m_IndependentScale;
 
 };
 
